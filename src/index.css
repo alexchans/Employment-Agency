@@ -37,3 +37,7 @@ a {
 a:hover {
   color: blue;
 }
+
+.center {
+  text-align: center;
+}

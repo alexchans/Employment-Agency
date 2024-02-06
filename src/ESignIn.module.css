@@ -1,0 +1,11 @@
+.grid {
+  padding-left: 25vw;
+  display: grid;
+  grid-template-columns: 32vw 32vw;
+  gap: 10px;
+}
+
+.button {
+  margin-top: 5vh;
+  text-align: center;
+}
