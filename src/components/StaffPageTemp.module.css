@@ -1,10 +1,5 @@
-.flex {
-  display: flex;
-  justify-content: space-between;
-}
-
 .title {
-  padding-left: 20vw;
+  padding-left: 14vw;
 }
 
 .username {
@@ -18,5 +13,5 @@
 }
 
 .line {
-  margin-left: 15vw;
+  margin-left: 13vw;
 }

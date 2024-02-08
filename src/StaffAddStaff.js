@@ -2,7 +2,7 @@ import React from 'react';
 import StaffPageTemp from './components/StaffPageTemp'
 import Button from '@mui/material/Button';
 
-class StaffUpdateInfo extends React.Component {
+class StaffAddStaff extends React.Component {
     render() {
         return (
             <div>
@@ -19,7 +19,19 @@ class StaffUpdateInfo extends React.Component {
                         <li>Add Staff</li>
                     </ul>
                     <div style={{ paddingRight: '70vw' }}>
-                        <h2>Update Info</h2>
+                        <h2>Add New Staff</h2>
+                        <label className="label" htmlFor="firstname">First Name:</label>
+                        <div>
+                            <input type="text" id="firstname" name="firstname" />
+                        </div>
+                        <label className="label" htmlFor="lastname">Last Name:</label>
+                        <div>
+                            <input type="text" id="lastname" name="lastname" />
+                        </div>
+                        <label className="label" htmlFor="Pusername">Preferred Username:</label>
+                        <div>
+                            <input type="text" id="Pusername" name="Pusername" />
+                        </div>
                         <label className="label" htmlFor="phonenumber">Phone Number:</label>
                         <div>
                             <input type="text" id="phonenumber" name="phonenumber" />
@@ -38,4 +50,4 @@ class StaffUpdateInfo extends React.Component {
     }
 }
 
-export default StaffUpdateInfo;
+export default StaffAddStaff;

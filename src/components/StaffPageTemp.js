@@ -8,22 +8,12 @@ class StaffPageTemp extends React.Component {
         return (
             <div>
                 <img src={logo} alt="Logo" className="logo" />
-                <div className={Styles.flex}>
-                    <h1 className={Styles.title}>StaffSpace</h1>
+                <div className='flex'>
+                    <h1 className={Styles.title}>Staff Space</h1>
                     <span className={Styles.username}>Alexchans</span>
                     <div className={Styles.logout}> <LogoutIcon /></div>
                 </div>
                 <hr className={Styles.line} />
-                <ul>
-                    <li>Update Info</li>
-                    <li>Review E Requests</li>
-                    <li>Review P Requests</li>
-                    <li>Delete Accounts</li>
-                    <li>View E Accounts</li>
-                    <li>View P Accounts</li>
-                    <li>Initiate Matching</li>
-                    <li>Add Staff</li>
-                </ul>
             </div >
         );
     }
