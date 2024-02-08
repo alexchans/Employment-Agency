@@ -7,7 +7,7 @@ function PSignIn() {
     return (
         <div>
             <img src={logo} alt="Logo" className="logo" />
-            <h1>Professional Sign Up</h1>
+            <h1 className='center'>Professional Sign Up</h1>
             <hr style={{ width: '60%' }} />
             <div className={Styles.grid}>
                 <div>

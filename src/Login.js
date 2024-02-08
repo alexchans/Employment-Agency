@@ -8,10 +8,10 @@ class Login extends React.Component {
         return (
             <div>
                 <img src={logo} alt="Logo" className="logo" />
-                <h1>Employment Agency</h1>
-                <h2>A recruiting hub that brings talent together!</h2>
-                <h3>Connect with job seekers and employees</h3>
-                <h1>Log In</h1>
+                <h1 className='center'>Employment Agency</h1>
+                <h2 className='center'>A recruiting hub that brings talent together!</h2>
+                <h3 className='center'>Connect with job seekers and employees</h3>
+                <h1 className='center'>Log In</h1>
                 <div className={Styles.container}>
                     <label className="label" htmlFor="username">Username:</label>
                     <div>
@@ -26,7 +26,7 @@ class Login extends React.Component {
                     <Button variant="contained" size='large'>Log In</Button>
                 </div>
                 <hr style={{ width: '40%' }} />
-                <h4>Don't have an account yet?</h4>
+                <h4 className='center'>Don't have an account yet?</h4>
                 <div className='center'>
                     <a href='#'>Professional Sign Up</a>
                     <span style={{ padding: 5 }}>|</span>

@@ -8,7 +8,7 @@ class ESignIn extends React.Component {
         return (
             <div>
                 <img src={logo} alt="Logo" className="logo" />
-                <h1>Employer Sign Up</h1>
+                <h1 className='center'>Employer Sign Up</h1>
                 <hr style={{ width: '60%' }} />
                 <div className={Styles.grid}>
                     <div>

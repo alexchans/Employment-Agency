@@ -4,6 +4,7 @@ import ESignIn from './ESignIn';
 import PSignIn from './PSignIn';
 import Login from './Login'
 import PRemove from './PRemove'
+import StaffUpdateInfo from './StaffUpdateInfo'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/EmployerSignIn" element={<ESignIn />} />
         <Route path="/ProfessionalSignIn" element={<PSignIn />} />
         <Route path="/ProfessionalRemove" element={<PRemove />} />
+        <Route path="/StaffUpdateInfo" element={<StaffUpdateInfo />} />
       </Routes>
     </Router>
   );

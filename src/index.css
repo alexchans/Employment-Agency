@@ -41,3 +41,13 @@ a:hover {
 .center {
   text-align: center;
 }
+
+ul {
+  position: relative;
+  list-style: none;
+  right: 3vw;
+}
+
+li {
+  padding-bottom: 10px;
+}
