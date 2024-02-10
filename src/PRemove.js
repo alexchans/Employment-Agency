@@ -1,42 +1,55 @@
 import React from 'react';
 import logo from './img/logo.png';
-import Styles from './PRemove.module.css';
 import Button from '@mui/material/Button';
+import ProPageTemp from './components/ProPageTemp';
 
 
-function PRemove() {
-
-    return (
-
-          <div>
-            <img src={logo} alt="Logo" className="logo" />
-            <h1>Professional Space</h1>
-            <hr style={{ width: '80%' }} />
-            
-            <h2>Remove Account</h2>
-            <div className={Styles.container}>
-                <div>
-                    <label className="label" htmlFor="username">Enter Username:</label>
+class PRemove extends React.Component {
+    render() {
+        return(
+            <div>
+                <ProPageTemp />
+                <div className='flex'>
+                    <ul>
+                        <li>Update Info</li>
+                        <li>Browse Job</li>
+                        <li>Initiate Matching</li>
+                        <li>Delete Accounts</li>
+                        <li>Payment</li>
+                    </ul>
+                    <div style={{ paddingRight: '70vw' }}>
+                        <h2>Remove Account</h2>
+                        <label className="label" htmlFor="phonenumber">Username:</label>
                         <div>
-                            <input type="text" id="username" name="username" />
+                            <input type="text" id="phonenumber" name="phonenumber" />
                         </div>
-                </div>
-                <div>
-                    <label className="label" htmlFor="password">Enter Password:</label>
+                        <label className="label" htmlFor="password">Password:</label>
                         <div>
-                            <input type="text" id="password" name="password" />
+                            <input type="password" id="password" name="password" />
                         </div>
+                        <div style={{ paddingTop: '3vh' }}>
+                            <Button variant="contained" size='medium' color='warning'>remove</Button>
+                        </div>
+                    </div>
                 </div>
-            
+
             </div>
-            <div className='center' style={{marginTop: '20px'}}>
-                <Button variant="contained" color="warning" size="large" >Delete</Button>
-            </div>
-          </div>
-        
-      );
-      
-      
+
+
+
+
+
+
+
+
+
+
+        );
+
+
+
+
+    }
+
 }
-
 export default PRemove;

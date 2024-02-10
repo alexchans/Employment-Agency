@@ -6,6 +6,9 @@ import Login from './Login'
 import PRemove from './PRemove'
 import StaffUpdateInfo from './StaffUpdateInfo'
 import StaffAddStaff from './StaffAddStaff';
+import PPayment from './PPayment'
+import PInitiate from './PInitiate'
+import PBrowse from './PBrowse'
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
         <Route path="/ProfessionalRemove" element={<PRemove />} />
         <Route path="/StaffUpdateInfo" element={<StaffUpdateInfo />} />
         <Route path="/StaffAddStaff" element={<StaffAddStaff />} />
+        <Route path="/ProfessionalPayment" element={<PPayment />} />
+        <Route path="ProfessionalInitiate" element={<PInitiate />} />
+        <Route path="ProfessionalBrowse" element = {<PBrowse />} />
       </Routes>
     </Router>
   );
