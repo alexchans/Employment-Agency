@@ -9,6 +9,9 @@ import StaffAddStaff from './StaffAddStaff';
 import PPayment from './PPayment'
 import PInitiate from './PInitiate'
 import PBrowse from './PBrowse'
+import PInfo from './PInfo'
+import PUpdate from './PUpdate'
+
 
 function App() {
   return (
@@ -23,6 +26,8 @@ function App() {
         <Route path="/ProfessionalPayment" element={<PPayment />} />
         <Route path="ProfessionalInitiate" element={<PInitiate />} />
         <Route path="ProfessionalBrowse" element = {<PBrowse />} />
+        <Route path="ProfessionalInfo" element = {<PInfo />} />
+        <Route path="ProfessionalUpdate" element = {<PUpdate />} />
       </Routes>
     </Router>
   );

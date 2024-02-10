@@ -1,0 +1,17 @@
+.grid {
+    padding-right: 20vw;
+    display: grid;
+    grid-template-columns: 21vw 21vw 1fr;
+    gap: 5px;
+  }
+  
+  table {
+    margin-top: 10px;
+  }
+  
+  table,
+  th,
+  td {
+    border: 1px solid white;
+  }
+  

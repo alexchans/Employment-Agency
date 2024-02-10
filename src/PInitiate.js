@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from './img/logo.png';
+import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ProPageTemp from './components/ProPageTemp';
 
@@ -33,7 +34,7 @@ class PInitiate extends React.Component {
                                 <tr>
                                     <td>Software Engineer</td>
                                     <td>Google</td>
-                                    <td><a href="/information-page">More Info</a></td>
+                                    <td><Link to="/ProfessionalInfo">More Info</Link></td>
                                 </tr>
                                 <tr>
                                     <td>UX Engineer</td>
