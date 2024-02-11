@@ -28,7 +28,7 @@ function App() {
         <Route path="/ProfessionalSignIn" element={<PSignIn />} />
         <Route path="/StaffUpdateInfo" element={<StaffUpdateInfo />} />
         <Route path="/StaffReviewERequests" element={<StaffRER />} />
-        <Route path="/StaffReviewProfessionalRequests" element={<StaffRPR />} />
+        <Route path="/StaffReviewPRequests" element={<StaffRPR />} />
         <Route path="/StaffDeleteAccounts" element={<StaffDelete />} />
         <Route path="/StaffViewEAccounts" element={<StaffViewE />} />
         <Route path="/StaffViewPAccounts" element={<StaffViewP />} />

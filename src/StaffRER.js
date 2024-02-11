@@ -1,8 +1,34 @@
 import React from 'react';
-import StaffPageTemp from './components/StaffPageTemp'
+import StaffPageTemp from './components/StaffPageTemp';
 import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 
 class StaffRER extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            openDialog: false,
+            selectedUser: null
+        };
+    }
+
+    handleOpenDialog = (user) => {
+        this.setState({
+            openDialog: true,
+            selectedUser: user
+        });
+    };
+
+    handleCloseDialog = () => {
+        this.setState({
+            openDialog: false,
+            selectedUser: null
+        });
+    };
+
     render() {
         return (
             <div>
@@ -18,10 +44,36 @@ class StaffRER extends React.Component {
                         <li>Initiate Matching</li>
                         <li>Add Staff</li>
                     </ul>
-                    <div style={{ paddingRight: '70vw' }}>
+                    <div style={{ paddingRight: '55vw' }}>
                         <h2>Review Employer Account Requests</h2>
+                        <ul>
+                            <div className='flex' >
+                                <li onClick={() => this.handleOpenDialog('Alex Chen')}>Alex Chen</li>
+                                <Button variant="contained" size='small'>Approve</Button>
+                                <Button variant="contained" size='small' style={{ backgroundColor: 'red' }}>Deny</Button>
+                            </div>
+                            <hr />
+                            <div className='flex'>
+                                <li onClick={() => this.handleOpenDialog('Logan Lu')}>Logan Lu</li>
+                                <Button variant="contained" size='small'>Approve</Button>
+                                <Button variant="contained" size='small' style={{ backgroundColor: 'red' }}>Deny</Button>
+                            </div>
+                            <hr />
+                        </ul>
                     </div>
                 </div>
+                <Dialog open={this.state.openDialog} onClose={this.handleCloseDialog}>
+                    <DialogTitle>User Details</DialogTitle>
+                    <DialogContent>
+                        <p>Mailing Address: {this.state.selectedUser === 'Alex Chen' ? '123 Street, 13579, Richardson, Texas' : '456 Street, 24681, Dallas, Texas'}</p>
+                        <p>Phone/Email: {this.state.selectedUser === 'Alex Chen' ? 'alexchen@smu.edu, 123-456-7890' : 'loganlu@smu.edu, 987-654-3210'}</p>
+                        <p>Username: {this.state.selectedUser === 'Alex Chen' ? 'Alexchans' : 'LuShao'}</p>
+                        <p>Company: {this.state.selectedUser === 'Alex Chen' ? 'Riot' : 'JPMorgan'}</p>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleCloseDialog} color="primary">Close</Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         );
     }

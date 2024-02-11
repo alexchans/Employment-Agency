@@ -18,8 +18,20 @@ class StaffMatching extends React.Component {
                         <li>Initiate Matching</li>
                         <li>Add Staff</li>
                     </ul>
-                    <div style={{ paddingRight: '70vw' }}>
-                        <h2>Review Professional Account Requests</h2>
+                    <div style={{ paddingRight: '71.5vw' }}>
+                        <h2>Initiate Matching</h2>
+                        <ul>
+                            <div className='flex' >
+                                <li>Alex Chen</li>
+                                <Button variant="contained" size='small'>Match</Button>
+                            </div>
+                            <hr />
+                            <div className='flex'>
+                                <li>Logan Lu</li>
+                                <Button variant="contained" size='small'>Match</Button>
+                            </div>
+                            <hr />
+                        </ul>
                     </div>
                 </div>
             </div>

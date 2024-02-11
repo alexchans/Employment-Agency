@@ -42,6 +42,10 @@ a:hover {
   text-align: center;
 }
 
+.left {
+  text-align: left;
+}
+
 ul {
   position: relative;
   list-style: none;
