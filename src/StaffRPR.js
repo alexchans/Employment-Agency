@@ -5,8 +5,9 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
+import { Link } from 'react-router-dom';
 
-class StaffRER extends React.Component {
+class StaffRPR extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -35,14 +36,14 @@ class StaffRER extends React.Component {
                 <StaffPageTemp />
                 <div className='flex'>
                     <ul>
-                        <li>Update Info</li>
-                        <li>Review E Requests</li>
-                        <li>Review P Requests</li>
-                        <li>Delete Accounts</li>
-                        <li>View E Accounts</li>
-                        <li>View P Accounts</li>
-                        <li>Initiate Matching</li>
-                        <li>Add Staff</li>
+                        <li><Link to="/StaffUpdateInfo">Update Info</Link></li>
+                        <li><Link to="/StaffReviewERequests">Review E Requests</Link></li>
+                        <li><Link to="/StaffReviewPRequests">Review P Requests</Link></li>
+                        <li><Link to="/StaffDeleteAccounts">Delete Accounts</Link></li>
+                        <li><Link to="/StaffViewEAccounts">View E Accounts</Link></li>
+                        <li><Link to="/StaffViewPAccounts">View P Accounts</Link></li>
+                        <li><Link to="/StaffMatching">Initiate Matching</Link></li>
+                        <li><Link to="/StaffAddStaff">Add Staff</Link></li>
                     </ul>
                     <div style={{ paddingRight: '53vw' }}>
                         <h2>Review Professional Account Requests</h2>
@@ -94,4 +95,4 @@ class StaffRER extends React.Component {
     }
 }
 
-export default StaffRER;
+export default StaffRPR;

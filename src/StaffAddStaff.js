@@ -1,6 +1,7 @@
 import React from 'react';
 import StaffPageTemp from './components/StaffPageTemp'
 import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
 class StaffAddStaff extends React.Component {
     render() {
@@ -9,14 +10,14 @@ class StaffAddStaff extends React.Component {
                 <StaffPageTemp />
                 <div className='flex'>
                     <ul>
-                        <li>Update Info</li>
-                        <li>Review E Requests</li>
-                        <li>Review P Requests</li>
-                        <li>Delete Accounts</li>
-                        <li>View E Accounts</li>
-                        <li>View P Accounts</li>
-                        <li>Initiate Matching</li>
-                        <li>Add Staff</li>
+                        <li><Link to="/StaffUpdateInfo">Update Info</Link></li>
+                        <li><Link to="/StaffReviewERequests">Review E Requests</Link></li>
+                        <li><Link to="/StaffReviewPRequests">Review P Requests</Link></li>
+                        <li><Link to="/StaffDeleteAccounts">Delete Accounts</Link></li>
+                        <li><Link to="/StaffViewEAccounts">View E Accounts</Link></li>
+                        <li><Link to="/StaffViewPAccounts">View P Accounts</Link></li>
+                        <li><Link to="/StaffMatching">Initiate Matching</Link></li>
+                        <li><Link to="/StaffAddStaff">Add Staff</Link></li>
                     </ul>
                     <div style={{ paddingRight: '70vw' }}>
                         <h2>Add New Staff</h2>
