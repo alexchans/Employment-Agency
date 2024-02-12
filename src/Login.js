@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './img/logo.png';
 import Styles from './Login.module.css';
 import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
     render() {
@@ -28,9 +29,9 @@ class Login extends React.Component {
                 <hr style={{ width: '40%' }} />
                 <h4 className='center'>Don't have an account yet?</h4>
                 <div className='center'>
-                    <a href='#'>Professional Sign Up</a>
-                    <span style={{ padding: 5 }}>|</span>
-                    <a href='#'>Employer Sign Up</a>
+                    <Link to="/ProfessionalSignIn">Professional Sign Up</Link>
+                    <span> | </span>
+                    <Link to="/EmployerSignIn">Employer Sign Up</Link>
                 </div>
             </div>
         );

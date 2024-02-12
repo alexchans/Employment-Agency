@@ -2,6 +2,7 @@ import React from 'react';
 import Styles from './PSignIn.module.css'
 import logo from './img/logo.png';
 import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
 function PSignIn() {
     return (
@@ -117,7 +118,7 @@ function PSignIn() {
             </div>
             <hr style={{ width: '30%' }} />
             <div className='center'>
-                <a href='#'>Already have an account? Log In</a>
+                <Link to="/Login">Already have an account? Log In</Link>
             </div>
         </div>
     );

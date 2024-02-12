@@ -2,6 +2,7 @@ import React from 'react';
 import Styles from './ESignIn.module.css'
 import logo from './img/logo.png';
 import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
 class ESignIn extends React.Component {
     render() {
@@ -77,7 +78,7 @@ class ESignIn extends React.Component {
                 </div>
                 <hr style={{ width: '30%' }} />
                 <div className='center'>
-                    <a href='#'>Already have an account? Log In</a>
+                    <Link to="/Login">Already have an account? Log In</Link>
                 </div>
             </div>
         );
