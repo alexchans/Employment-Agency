@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './img/logo.png';
 import Button from '@mui/material/Button';
 import ProPageTemp from './components/ProPageTemp';
+import { Link } from 'react-router-dom';
 
 
 class PRemove extends React.Component {
@@ -11,11 +12,11 @@ class PRemove extends React.Component {
                 <ProPageTemp />
                 <div className='flex'>
                     <ul>
-                        <li>Update Info</li>
-                        <li>Browse Job</li>
-                        <li>Initiate Matching</li>
-                        <li>Delete Accounts</li>
-                        <li>Payment</li>
+                        <li><Link to="/ProfessionalUpdate">Update Info</Link></li>
+                        <li><Link to="/ProfessionalBrowse">Browse Job</Link></li>
+                        <li><Link to="/ProfessionalInitiate">Initiate Matching</Link></li>
+                        <li><Link to="/ProfessionalRemove">Remove</Link></li>
+                        <li><Link to="/ProfessionalPayment">Payment</Link></li>
                     </ul>
                     <div style={{ paddingRight: '70vw' }}>
                         <h2>Remove Account</h2>
