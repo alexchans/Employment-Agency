@@ -17,6 +17,13 @@ import PInitiate from './PInitiate'
 import PBrowse from './PBrowse'
 import PInfo from './PInfo'
 import PUpdate from './PUpdate'
+import EProfile from './EProfile'
+import ECreateJob from './ECreateJob'
+import EUpdateJob from './EUpdateJob'
+import EDeleteAcc from './EDeleteAcc'
+import EPay from './EPay'
+import EJobList from './EJobList'
+import EChangePass from "./EChangePass";
 
 
 function App() {
@@ -40,6 +47,13 @@ function App() {
         <Route path="ProfessionalBrowse" element={<PBrowse />} />
         <Route path="ProfessionalInfo" element={<PInfo />} />
         <Route path="ProfessionalUpdate" element={<PUpdate />} />
+        <Route path="/EmployerProfile" element={<EProfile />} />
+        <Route path="/EmployerDelete" element={<EDeleteAcc />} />
+        <Route path="/EmployerCreateJob" element={<ECreateJob />} />
+        <Route path="/EmployerUpdateJob" element={<EUpdateJob />} />
+        <Route path="/EmployerChangePass" element={<EChangePass />} />
+        <Route path="/EmployerPayment" element={<EPay />} />
+        <Route path="/EmployerJobList" element={<EJobList />} />
       </Routes>
     </Router>
   );

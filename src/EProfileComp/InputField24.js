@@ -2,8 +2,8 @@ import React from 'react';
 
 const styles = {
     Input: {
-        top: '198px',
-        left: '840px',
+        top: '780px',
+        left: '215px',
         width: '348px',
         height: '58px',
         padding: '0px 8px',
@@ -17,11 +17,13 @@ const styles = {
         lineHeight: '19px',
         outline: 'none',
         position: 'absolute',
+        marginTop: '-30px',
+        marginLeft: '-13px',
     },
 };
 
 const defaultProps = {
-    text: 'Last Name',
+    text: 'Email Address',
 };
 
 const InputField = (props) => {

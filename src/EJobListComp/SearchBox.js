@@ -2,26 +2,26 @@ import React from 'react';
 
 const styles = {
     Input: {
-        top: '198px',
-        left: '840px',
-        width: '348px',
-        height: '58px',
+        top: '75px',
+        left: '1053px',
+        width: '400px',
+        height: '38px',
         padding: '0px 8px',
         border: '1px solid #ffffff',
         boxSizing: 'border-box',
-        borderRadius: '6px',
-        backgroundColor: 'rgba(0,0,0,0)',
+        borderRadius: '12px',
+        backgroundColor: '#282828',
         color: '#ffffff',
-        fontSize: '14px',
+        fontSize: '20px',
         fontFamily: 'Poppins',
-        lineHeight: '19px',
+        lineHeight: '26px',
         outline: 'none',
-        position: 'absolute',
+        position: 'absolute'
     },
 };
 
 const defaultProps = {
-    text: 'Last Name',
+    text: 'Search by Job ID',
 };
 
 const InputField = (props) => {

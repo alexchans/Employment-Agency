@@ -3,7 +3,7 @@ import React from 'react';
 const styles = {
     Input: {
         top: '455px',
-        left: '207px',
+        left: '440px',
         width: '348px',
         height: '58px',
         padding: '0px 8px',
@@ -21,7 +21,7 @@ const styles = {
 };
 
 const defaultProps = {
-    text: '204NGrandStreet',
+    text: '204 N Grand Street',
 };
 
 const InputField = (props) => {

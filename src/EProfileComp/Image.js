@@ -4,13 +4,15 @@ const styles = {
     ImageContainer: {
         top: '27px',
         left: '7px',
-        width: '171px',
-        height: '108px',
+        width: '140px',
+        height: '80px',
         borderRadius: '8px',
         backgroundImage: 'url(./image.png)',
         backgroundPosition: 'center center',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
+        marginLeft: '20px',
+        marginBottom: '10px'
     },
 };
 

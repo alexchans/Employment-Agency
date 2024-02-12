@@ -2,26 +2,26 @@ import React from 'react';
 
 const styles = {
     Input: {
-        top: '198px',
-        left: '840px',
-        width: '348px',
-        height: '58px',
+        top: '202px',
+        left: '575px',
+        width: '560px',
+        height: '52px',
         padding: '0px 8px',
         border: '1px solid #ffffff',
         boxSizing: 'border-box',
-        borderRadius: '6px',
-        backgroundColor: 'rgba(0,0,0,0)',
+        borderRadius: '12px',
+        backgroundColor: '#282828',
         color: '#ffffff',
         fontSize: '14px',
         fontFamily: 'Poppins',
-        lineHeight: '19px',
+        lineHeight: '18px',
         outline: 'none',
-        position: 'absolute',
+        position: 'absolute'
     },
 };
 
 const defaultProps = {
-    text: 'Last Name',
+    text: '    Your Name',
 };
 
 const InputField = (props) => {

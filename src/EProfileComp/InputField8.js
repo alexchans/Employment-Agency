@@ -3,7 +3,7 @@ import React from 'react';
 const styles = {
     Input: {
         top: '555px',
-        left: '607px',
+        left: '840px',
         width: '348px',
         height: '58px',
         padding: '0px 8px',

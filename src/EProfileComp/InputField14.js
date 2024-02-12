@@ -2,8 +2,8 @@ import React from 'react';
 
 const styles = {
     Input: {
-        top: '229px',
-        left: '450px',
+        top: '30px',
+        left: '215px',
         width: '348px',
         height: '58px',
         padding: '0px 8px',
@@ -23,13 +23,22 @@ const styles = {
 };
 
 const defaultProps = {
-    text: 'First Name',
+    text: 'Start date',
 };
 
-const InputField = (props) => {
+// Using React.forwardRef to forward the ref to the DOM input element
+const InputField = React.forwardRef((props, ref) => {
+    // Destructure the props to isolate `text` and spread the rest
+    const { text, ...rest } = props;
     return (
-        <input style={styles.Input} placeholder={props.text ?? defaultProps.text} />
+        <input
+            ref={ref}
+            style={styles.Input}
+            placeholder={props.text ?? defaultProps.text}
+            {...rest} // Spread the rest of the props here
+        />
     );
-};
+});
+
 
 export default InputField;

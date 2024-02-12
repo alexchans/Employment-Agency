@@ -1,0 +1,125 @@
+.divider1 {
+    top: 102px;
+    left: 20px;
+    width: 625px;
+    height: 1px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    position: absolute;
+    margin-left: -13px;
+    margin-top: -25px;
+}
+
+.label1 {
+    color: #ffffff;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    line-height: 23px;
+}
+
+.divider2 {
+    top: 172px;
+    left: 30px;
+    width: 605px;
+    height: 1px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    position: absolute;
+    margin-left: -13px;
+    margin-top: -25px;
+}
+
+.text2 {
+    color: #ffffff;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    line-height: 23px;
+}
+
+.text3 {
+    color: #ffffff;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    line-height: 23px;
+    margin-left: 300px;
+    margin-top: -73px;
+}
+
+.label2 {
+    color: #ffffff;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    line-height: 23px;
+    margin-top: 50px;
+}
+
+.divider3 {
+    top: 172px;
+    left: 30px;
+    width: 605px;
+    height: 1px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    position: absolute;
+    margin-left: -13px;
+    margin-top: 85px;
+}
+
+.text4 {
+    color: #ffffff;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    line-height: 23px;
+    margin-left: 300px;
+    margin-top: -73px;
+}
+
+.label3 {
+    color: #ffffff;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    line-height: 23px;
+    margin-top: 50px;
+}
+
+.divider4 {
+    top: 282px;
+    left: 30px;
+    width: 605px;
+    height: 1px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    position: absolute;
+    margin-left: -13px;
+    margin-top: 85px;
+}
+
+.label4 {
+    color: #ffffff;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    line-height: 23px;
+    margin-top: -3px;
+}
+
+.divider5 {
+    top: 282px;
+    left: 30px;
+    width: 605px;
+    height: 1px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    position: absolute;
+    margin-left: -13px;
+    margin-top: 195px;
+}
+
+
+
