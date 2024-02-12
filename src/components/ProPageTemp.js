@@ -2,6 +2,7 @@ import React from 'react';
 import logo from '../img/logo.png';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Styles from './ProPageTemp.module.css'
+import { Link } from 'react-router-dom';
 
 class StaffPageTemp extends React.Component {
     render() {
@@ -11,7 +12,9 @@ class StaffPageTemp extends React.Component {
                 <div className='flex'>
                     <h1 className={Styles.title}>Professional Space</h1>
                     <span className={Styles.username}>Alexchans</span>
-                    <div className={Styles.logout}> <LogoutIcon /></div>
+                    <div className={Styles.logout}>
+                        <Link to="/Login"><LogoutIcon /></Link>
+                    </div>
                 </div>
                 <hr className={Styles.line} />
             </div >
