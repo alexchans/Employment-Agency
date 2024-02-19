@@ -8,33 +8,38 @@ class Login extends React.Component {
     state = {
         username: '',
         password: '',
-        validationMessage: ''
+        usernameError: '',
+        passwordError: ''
     };
 
     handleInputChange = (event) => {
         const { name, value } = event.target;
-        this.setState({ [name]: value, validationMessage: '' });
+        this.setState({
+            [name]: value,
+            [`${name}Error`]: '',
+        });
     };
 
     handleSubmit = (event) => {
         event.preventDefault();
         const { username, password } = this.state;
-        if (!username && !password) {
-            this.setState({ validationMessage: 'Username and Password cannot be empty.' });
-            return;
-        }
+        this.setState({ usernameError: '', passwordError: '' });
         if (!username) {
-            this.setState({ validationMessage: 'Username cannot be empty.' });
-            return;
+            this.setState({ usernameError: 'Username cannot be empty.' });
+        } else if (!/^[A-Za-z][A-Za-z0-9]{7,}$/.test(username)) {
+            this.setState({ usernameError: 'Username must be at least 8 characters long and start with a letter.' });
         }
         if (!password) {
-            this.setState({ validationMessage: 'Password cannot be empty.' });
-            return;
+            this.setState({ passwordError: 'Password cannot be empty.' });
+        } else if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(password)) {
+            this.setState({ passwordError: 'Password must be at least 8 characters long and include at least one letter, one number, and one special character.' });
         }
+        return;
     };
 
+
     render() {
-        const { validationMessage } = this.state;
+        const { usernameError, passwordError } = this.state;
 
         return (
             <div>
@@ -54,6 +59,7 @@ class Login extends React.Component {
                             onChange={this.handleInputChange}
                         />
                     </div>
+                    <p style={{ color: "red" }}>{usernameError}</p>
                     <label className="label" htmlFor="password">Password:</label>
                     <div>
                         <input
@@ -64,7 +70,7 @@ class Login extends React.Component {
                             onChange={this.handleInputChange}
                         />
                     </div>
-                    <p style={{ color: "red" }}>{validationMessage}</p>
+                    <p style={{ color: "red" }}>{passwordError}</p>
                     <div className={Styles.button}>
                         <Button type="submit" variant="contained" size='large'>Log In</Button>
                     </div>

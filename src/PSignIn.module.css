@@ -5,12 +5,18 @@
   gap: 5px;
 }
 
-table {
+.table {
   margin-top: 10px;
+  padding-left: 41vw;
 }
 
 table,
 th,
 td {
   border: 1px solid white;
+}
+
+.button {
+  margin-top: 5vh;
+  text-align: center;
 }
