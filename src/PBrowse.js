@@ -5,8 +5,33 @@ import { Link } from 'react-router-dom';
 
 
 class PBrowse extends React.Component {
+
+    state = {
+        search: '',
+        showWarning: false,
+        warningMessage: '',
+
+    };
+
+
+    handleSearch = (event) => {
+        this.setState({ search: event.target.value, showWarning: false });
+
+    };
+
+    handleSearchClick = () => {
+        const { search } = this.state;
+        if (!search) {
+            this.setState({ showWarning: true, warningMessage: 'Please enter a search term.' }); 
+        } else {
+            console.log("Searching for:", search);
+            
+        }
+    };
     render() {
+        const { search, showWarning, warningMessage } = this.state;
         return (
+            
             <div>
                 <ProPageTemp />
                 <div className='flex'>
@@ -16,14 +41,16 @@ class PBrowse extends React.Component {
                         <li><Link to="/ProfessionalInitiate">Initiate Matching</Link></li>
                         <li><Link to="/ProfessionalRemove">Remove</Link></li>
                         <li><Link to="/ProfessionalPayment">Payment</Link></li>
+                        <li><Link to="/ProfessionalPassword">Change Password</Link></li>
                     </ul>
                     <label className="label" htmlFor="search">Search:</label>
                     <div>
-                        <input type="text" id="search" name="search" />
+                        <input type="text" id="search" name="search" value={search} onChange={this.handleSearch}/>
                     </div>
                     <div>
-                        <Button variant="contained" size='medium' color='success'>yes</Button>
+                        <Button variant="contained" size='medium' color='success' onClick={this.handleSearchClick}>yes</Button>
                     </div>
+                    {showWarning && <p style={{color: 'red'}}>{warningMessage}</p>}
                     <div style={{ paddingRight: '50vw' }}>
                         <table>
                             <thead>

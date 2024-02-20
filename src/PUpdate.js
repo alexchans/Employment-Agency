@@ -13,7 +13,71 @@ import Styles from './PUpdate.module.css';
 
 
 class PUpdate extends React.Component {
+    state = {
+        username: '',
+        password: '',
+        usernameError: '',
+        passwordError: '',
+        category: '',
+        keys: '',
+        categoriesAndKeys: []
+    };
+
+    handleInputChange = (event) => {
+        const { name, value } = event.target;
+        this.setState({
+            [name]: value,
+            [`${name}Error`]: '',
+        });
+    };
+
+    handleAddCategoryAndKeys = () => {
+        const { category, keys, categoriesAndKeys } = this.state;
+        this.setState({ categoryError: '', keysError: '' })
+        if (!category) {
+            this.setState({ categoryError: 'Category can not be empty for updating table' })
+        }
+        if (!keys) {
+            this.setState({ keysError: 'Key can not be empty for updating table' })
+        }
+        if (category && keys) {
+            const newEntry = { category, keys };
+            this.setState({
+                categoriesAndKeys: [...categoriesAndKeys, newEntry],
+                category: '',
+                keys: '',
+            });
+        }
+    };
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        const { firstname, lastname, email, phonenumber, SA, zipcode, city, state, company, username, institution, degree, graduationdate } = this.state;
+        this.setState({ firstnameError: '', lastnameError: '', emailError: '', phonenumberError: '', SAError: '', zipcodeError: '', cityError: '', stateError: '', companyError: '', usernameError: '', institutionError: '', degreeError: '', graduationdateError: '', tableError: '' });
+        const fields = { firstname, lastname, email, phonenumber, SA, zipcode, city, state, company, username, institution, degree, graduationdate };
+        Object.keys(fields).forEach(field => {
+            if (!fields[field]) {
+                this.setState({ [`${field}Error`]: `${field.charAt(0).toUpperCase() + field.slice(1)} cannot be empty.` });
+            }
+        });
+        if (username && !/^[A-Za-z][A-Za-z0-9]{7,}$/.test(username)) {
+            this.setState({ usernameError: 'Username must be at least 8 characters long and start with a letter.' });
+        }
+        if (email && !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+            this.setState({ emailError: 'Invalid email format.' });
+
+        }
+        if (phonenumber && !/^(\+\d{1,2}\s?)?1?\-?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test(phonenumber)) {
+            this.setState({ phonenumberError: 'Invalid phone number format.' });
+
+        }
+        if (this.state.categoriesAndKeys.length < 2) {
+            this.setState({ tableError: 'You need at least 2 qualifications in the table' });
+        }
+        return;
+    };
     render() {
+        const { firstnameError, lastnameError, emailError, phonenumberError, SAError, zipcodeError, cityError, stateError, companyError, usernameError, institutionError, degreeError, graduationdateError, categoriesAndKeys, categoryError, keysError, tableError } = this.state;
         return (
             <div>
                 <ProPageTemp />
@@ -24,79 +88,164 @@ class PUpdate extends React.Component {
                         <li><Link to="/ProfessionalInitiate">Initiate Matching</Link></li>
                         <li><Link to="/ProfessionalRemove">Remove</Link></li>
                         <li><Link to="/ProfessionalPayment">Payment</Link></li>
+                        <li><Link to="/ProfessionalPassword">Change password</Link></li>
                     </ul>
                     <h1 className='center'>Update Info</h1>
+                    <form onSubmit={this.handleSubmit}>
                     <div className={Styles.grid}>
                         <div>
-                            <label className="label" htmlFor="email">Email</label>
+                            <label className="label" htmlFor="firstname">First Name:</label>
                             <div>
-                                <input type="text" id="email" name="email" />
+                                <input type="text" id="firstname" name="firstname" value={this.state.firstname}
+                                    onChange={this.handleInputChange} />
                             </div>
+                            <p style={{ color: "red" }}>{firstnameError}</p>
                         </div>
                         <div>
-                            <label className="label" htmlFor="phone number">Phone Number:</label>
+                            <label className="label" htmlFor="lastname">Last Name:</label>
                             <div>
-                                <input type="text" id="phone number" name="phone number" />
+                                <input type="text" id="lastname" name="lastname" value={this.state.lastname}
+                                    onChange={this.handleInputChange} />
                             </div>
+                            <p style={{ color: "red" }}>{lastnameError}</p>
+                        </div>
+                        <div>
+                            <label className="label" htmlFor="email">Email:</label>
+                            <div>
+                                <input type="text" id="email" name="email" value={this.state.email}
+                                    onChange={this.handleInputChange} />
+                            </div>
+                            <p style={{ color: "red" }}>{emailError}</p>
+                        </div>
+                        <div>
+                            <label className="label" htmlFor="phonenumber">Phone Number:</label>
+                            <div>
+                                <input type="text" id="phonenumber" name="phonenumber" value={this.state.phonenumber}
+                                    onChange={this.handleInputChange} />
+                            </div>
+                            <p style={{ color: "red" }}>{phonenumberError}</p>
+                        </div>
+                        <div>
+                            <label className="label" htmlFor="SA">Street Address:</label>
+                            <div>
+                                <input type="text" id="SA" name="SA" value={this.state.SA}
+                                    onChange={this.handleInputChange} />
+                            </div>
+                            <p style={{ color: "red" }}>{SAError}</p>
+                        </div>
+                        <div>
+                            <label className="label" htmlFor="zipcode">ZipCode:</label>
+                            <div>
+                                <input type="text" id="zipcode" name="zipcode" value={this.state.zipcode}
+                                    onChange={this.handleInputChange} />
+                            </div>
+                            <p style={{ color: "red" }}>{zipcodeError}</p>
+                        </div>
+                        <div>
+                            <label className="label" htmlFor="city">City:</label>
+                            <div>
+                                <input type="text" id="city" name="city" value={this.state.city}
+                                    onChange={this.handleInputChange} />
+                            </div>
+                            <p style={{ color: "red" }}>{cityError}</p>
+                        </div>
+                        <div>
+                            <label className="label" htmlFor="state">State:</label>
+                            <div>
+                                <input type="text" id="state" name="state" value={this.state.state}
+                                    onChange={this.handleInputChange} />
+                            </div>
+                            <p style={{ color: "red" }}>{stateError}</p>
+                        </div>
+                        <div>
+                            <label className="label" htmlFor="company">Company:</label>
+                            <div>
+                                <input type="text" id="company" name="company" value={this.state.company}
+                                    onChange={this.handleInputChange} />
+                            </div>
+                            <p style={{ color: "red" }}>{companyError}</p>
+                        </div>
+                        <div>
+                            <label className="label" htmlFor="username">Preferred Username:</label>
+                            <div>
+                                <input
+                                    type="text"
+                                    id="username"
+                                    name="username"
+                                    value={this.state.username}
+                                    onChange={this.handleInputChange}
+                                />
+                            </div>
+                            <p style={{ color: "red" }}>{usernameError}</p>
                         </div>
                         <div>
                             <label className="label" htmlFor="institution">Institution:</label>
                             <div>
-                                <input type="text" id="institution" name="institution" />
+                                <input type="text" id="institution" name="institution" value={this.state.institution}
+                                    onChange={this.handleInputChange} />
                             </div>
+                            <p style={{ color: "red" }}>{institutionError}</p>
                         </div>
                         <div>
                             <label className="label" htmlFor="degree">Degree:</label>
                             <div>
-                                <input type="text" id="degree" name="degree" />
+                                <input type="text" id="degree" name="degree" value={this.state.degree}
+                                    onChange={this.handleInputChange} />
                             </div>
+                            <p style={{ color: "red" }}>{degreeError}</p>
                         </div>
                         <div>
-                            <label className="label" htmlFor="streetaddress">Mailing Address:</label>
+                            <label className="label" htmlFor="graduationdate">Graduation Date:</label>
                             <div>
-                                <input type="text" id="streetaddress" name="streetaddress" />
+                                <input type="text" id="graduationdate" name="graduationdate" value={this.state.graduationdate}
+                                    onChange={this.handleInputChange} />
                             </div>
-                        </div>
-                        <div>
-                            <label className="label" htmlFor="date">Graduation Date:</label>
-                            <div>
-                                <input type="text" id="date" name="date" />
-                            </div>
+                            <p style={{ color: "red" }}>{graduationdateError}</p>
                         </div>
                         <div>
                             <label className="label" htmlFor="category">Category:</label>
                             <div>
-                                <input type="text" id="category" name="category" />
+                                <input type="text" id="category" name="category" value={this.state.category}
+                                    onChange={this.handleInputChange} />
                             </div>
+                            <p style={{ color: "red" }}>{categoryError}</p>
                         </div>
                         <div>
                             <label className="label" htmlFor="keys">Key words/phrases</label>
                             <div>
-                                <input type="text" id="keys" name="keys" />
+                                <input type="text" id="keys" name="keys" value={this.state.keys}
+                                    onChange={this.handleInputChange} />
                             </div>
+                            <p style={{ color: "red" }}>{keysError}</p>
                         </div>
-                        <div className='table'>
-                            <Button variant="contained" size='small'>Add New Row</Button>
-                            <table>
+                    </div>
+                    <div className='center'>
+                        <Button onClick={this.handleAddCategoryAndKeys} variant="contained" size='small'>Add New Row</Button>
+                    </div>
+                    <div className={Styles.table}>
+                        <table>
+                            <thead>
                                 <tr>
                                     <th>Category</th>
                                     <th>Key words/phrases</th>
                                 </tr>
-                                <tr>
-                                    <td>Languages</td>
-                                    <td>Java,C++</td>
-                                </tr>
-                                <tr>
-                                    <td>Previous Employment</td>
-                                    <td>Software Engineer</td>
-                                </tr>
-                            </table>
-                        </div>
+                            </thead>
+                            <tbody>
+                                {categoriesAndKeys.map((entry, index) => (
+                                    <tr key={index}>
+                                        <td>{entry.category}</td>
+                                        <td>{entry.keys}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        <p style={{ color: "red" }}>{tableError}</p>
                     </div>
-
+                    <div className='center'>
+                    <Button variant="contained" type='submit' size='medium' color='success'>Confirm</Button>
                 </div>
-                <div className='center'>
-                    <Button variant="contained" size='medium' color='success'>Confirm</Button>
+                </form>
+
                 </div>
             </div>
 

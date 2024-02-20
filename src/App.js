@@ -24,6 +24,7 @@ import EDeleteAcc from './EDeleteAcc'
 import EPay from './EPay'
 import EJobList from './EJobList'
 import EChangePass from "./EChangePass";
+import PPassword from "./PPassword";
 
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
         <Route path="ProfessionalBrowse" element={<PBrowse />} />
         <Route path="ProfessionalInfo" element={<PInfo />} />
         <Route path="ProfessionalUpdate" element={<PUpdate />} />
+        <Route path="/ProfessionalPassword" element={<PPassword />} />
         <Route path="/EmployerProfile" element={<EProfile />} />
         <Route path="/EmployerDelete" element={<EDeleteAcc />} />
         <Route path="/EmployerCreateJob" element={<ECreateJob />} />

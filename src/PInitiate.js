@@ -44,6 +44,7 @@ class PInitiate extends React.Component {
                         <li><Link to="/ProfessionalInitiate">Initiate Matching</Link></li>
                         <li><Link to="/ProfessionalRemove">Remove</Link></li>
                         <li><Link to="/ProfessionalPayment">Payment</Link></li>
+                        <li><Link to="/ProfessionalPassword">Change Password</Link></li>
                     </ul>
                     <div className='center'>
                         <Button variant="contained" size='medium' color='success'>Initiate Matching</Button>
