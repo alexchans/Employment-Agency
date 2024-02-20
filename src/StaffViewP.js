@@ -44,6 +44,7 @@ class StaffViewP extends React.Component {
                         <li><Link to="/StaffViewPAccounts">View P Accounts</Link></li>
                         <li><Link to="/StaffMatching">Initiate Matching</Link></li>
                         <li><Link to="/StaffAddStaff">Add Staff</Link></li>
+                        <li><Link to="/StaffChangePassword">Change Password</Link></li>
                     </ul>
                     <div style={{ paddingRight: '62.5vw' }}>
                         <h2>View Professional Accounts</h2>

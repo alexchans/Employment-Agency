@@ -44,6 +44,7 @@ class StaffDelete extends React.Component {
                         <li><Link to="/StaffViewPAccounts">View P Accounts</Link></li>
                         <li><Link to="/StaffMatching">Initiate Matching</Link></li>
                         <li><Link to="/StaffAddStaff">Add Staff</Link></li>
+                        <li><Link to="/StaffChangePassword">Change Password</Link></li>
                     </ul>
                     <div style={{ paddingRight: '58vw' }}>
                         <h2>Review Delete Account Requests</h2>

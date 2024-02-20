@@ -11,6 +11,7 @@ import StaffDelete from './StaffDelete';
 import StaffViewE from './StaffViewE';
 import StaffViewP from './StaffViewP';
 import StaffMatching from './StaffMatching'
+import StaffChangePassword from './StaffChangePassword';
 import PRemove from './PRemove'
 import PPayment from './PPayment'
 import PInitiate from './PInitiate'
@@ -42,12 +43,13 @@ function App() {
         <Route path="/StaffViewPAccounts" element={<StaffViewP />} />
         <Route path="/StaffMatching" element={<StaffMatching />} />
         <Route path="/StaffAddStaff" element={<StaffAddStaff />} />
+        <Route path="/StaffChangePassword" element={<StaffChangePassword />} />
         <Route path="/ProfessionalRemove" element={<PRemove />} />
         <Route path="/ProfessionalPayment" element={<PPayment />} />
-        <Route path="ProfessionalInitiate" element={<PInitiate />} />
-        <Route path="ProfessionalBrowse" element={<PBrowse />} />
-        <Route path="ProfessionalInfo" element={<PInfo />} />
-        <Route path="ProfessionalUpdate" element={<PUpdate />} />
+        <Route path="/ProfessionalInitiate" element={<PInitiate />} />
+        <Route path="/ProfessionalBrowse" element={<PBrowse />} />
+        <Route path="/ProfessionalInfo" element={<PInfo />} />
+        <Route path="/ProfessionalUpdate" element={<PUpdate />} />
         <Route path="/ProfessionalPassword" element={<PPassword />} />
         <Route path="/EmployerProfile" element={<EProfile />} />
         <Route path="/EmployerDelete" element={<EDeleteAcc />} />
