@@ -6,10 +6,6 @@ import { Link } from 'react-router-dom';
 
 class ESignIn extends React.Component {
     state = {
-        username: '',
-        password: '',
-        usernameError: '',
-        passwordError: ''
     };
 
     handleInputChange = (event) => {
@@ -23,7 +19,6 @@ class ESignIn extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault();
         const { firstname, lastname, email, phonenumber, SA, zipcode, city, state, company, username } = this.state;
-        this.setState({ firstnameError: '', lastnameError: '', emailError: '', phonenumberError: '', SAError: '', zipcodeError: '', cityError: '', stateError: '', companyError: '', usernameError: '' });
         const fields = { firstname, lastname, email, phonenumber, SA, zipcode, city, state, company, username };
         Object.keys(fields).forEach(field => {
             if (!fields[field]) {
@@ -35,11 +30,9 @@ class ESignIn extends React.Component {
         }
         if (email && !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
             this.setState({ emailError: 'Invalid email format.' });
-
         }
         if (phonenumber && !/^(\+\d{1,2}\s?)?1?\-?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test(phonenumber)) {
             this.setState({ phonenumberError: 'Invalid phone number format.' });
-
         }
         return;
     };

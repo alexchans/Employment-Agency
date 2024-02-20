@@ -4,7 +4,39 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
 class StaffAddStaff extends React.Component {
+    state = {
+    };
+
+    handleInputChange = (event) => {
+        const { name, value } = event.target;
+        this.setState({
+            [name]: value,
+            [`${name}Error`]: '',
+        });
+    };
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        const { username, firstname, lastname, email, phonenumber } = this.state;
+        const fields = { firstname, lastname, email, phonenumber, username };
+        Object.keys(fields).forEach(field => {
+            if (!fields[field]) {
+                this.setState({ [`${field}Error`]: `${field.charAt(0).toUpperCase() + field.slice(1)} cannot be empty.` });
+            }
+        });
+        if (username && !/^[A-Za-z][A-Za-z0-9]{7,}$/.test(username)) {
+            this.setState({ usernameError: 'Username must be at least 8 characters long and start with a letter.' });
+        }
+        if (email && !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+            this.setState({ emailError: 'Invalid email format.' });
+        }
+        if (phonenumber && !/^(\+\d{1,2}\s?)?1?\-?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test(phonenumber)) {
+            this.setState({ phonenumberError: 'Invalid phone number format.' });
+        }
+        return;
+    };
     render() {
+        const { usernameError, emailError, phonenumberError, firstnameError, lastnameError } = this.state;
         return (
             <div>
                 <StaffPageTemp />
@@ -19,32 +51,42 @@ class StaffAddStaff extends React.Component {
                         <li><Link to="/StaffMatching">Initiate Matching</Link></li>
                         <li><Link to="/StaffAddStaff">Add Staff</Link></li>
                     </ul>
-                    <div style={{ paddingRight: '70vw' }}>
+                    <form onSubmit={this.handleSubmit} style={{ paddingRight: '70vw' }}>
                         <h2>Add New Staff</h2>
                         <label className="label" htmlFor="firstname">First Name:</label>
                         <div>
-                            <input type="text" id="firstname" name="firstname" />
+                            <input type="text" id="firstname" name="firstname" value={this.state.firstname}
+                                onChange={this.handleInputChange} />
                         </div>
+                        <p style={{ color: "red" }}>{firstnameError}</p>
                         <label className="label" htmlFor="lastname">Last Name:</label>
                         <div>
-                            <input type="text" id="lastname" name="lastname" />
+                            <input type="text" id="lastname" name="lastname" value={this.state.lastname}
+                                onChange={this.handleInputChange} />
                         </div>
-                        <label className="label" htmlFor="Pusername">Preferred Username:</label>
+                        <p style={{ color: "red" }}>{lastnameError}</p>
+                        <label className="label" htmlFor="username">Preferred Username:</label>
                         <div>
-                            <input type="text" id="Pusername" name="Pusername" />
+                            <input type="text" id="username" name="username" value={this.state.username}
+                                onChange={this.handleInputChange} />
                         </div>
+                        <p style={{ color: "red" }}>{usernameError}</p>
                         <label className="label" htmlFor="phonenumber">Phone Number:</label>
                         <div>
-                            <input type="text" id="phonenumber" name="phonenumber" />
+                            <input type="text" id="phonenumber" name="phonenumber" value={this.state.phonenumber}
+                                onChange={this.handleInputChange} />
                         </div>
+                        <p style={{ color: "red" }}>{phonenumberError}</p>
                         <label className="label" htmlFor="email">Email:</label>
                         <div>
-                            <input type="text" id="email" name="email" />
+                            <input type="text" id="email" name="email" value={this.state.email}
+                                onChange={this.handleInputChange} />
                         </div>
+                        <p style={{ color: "red" }}>{emailError}</p>
                         <div style={{ paddingTop: '3vh' }}>
-                            <Button variant="contained" size='medium'>Submit</Button>
+                            <Button type="submit" variant="contained" size='medium'>Submit</Button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         );

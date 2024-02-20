@@ -6,12 +6,6 @@ import { Link } from 'react-router-dom';
 
 class PSignIn extends React.Component {
     state = {
-        username: '',
-        password: '',
-        usernameError: '',
-        passwordError: '',
-        category: '',
-        keys: '',
         categoriesAndKeys: []
     };
 
@@ -25,7 +19,6 @@ class PSignIn extends React.Component {
 
     handleAddCategoryAndKeys = () => {
         const { category, keys, categoriesAndKeys } = this.state;
-        this.setState({ categoryError: '', keysError: '' })
         if (!category) {
             this.setState({ categoryError: 'Category can not be empty for updating table' })
         }
@@ -45,7 +38,6 @@ class PSignIn extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault();
         const { firstname, lastname, email, phonenumber, SA, zipcode, city, state, company, username, institution, degree, graduationdate } = this.state;
-        this.setState({ firstnameError: '', lastnameError: '', emailError: '', phonenumberError: '', SAError: '', zipcodeError: '', cityError: '', stateError: '', companyError: '', usernameError: '', institutionError: '', degreeError: '', graduationdateError: '', tableError: '' });
         const fields = { firstname, lastname, email, phonenumber, SA, zipcode, city, state, company, username, institution, degree, graduationdate };
         Object.keys(fields).forEach(field => {
             if (!fields[field]) {
@@ -65,6 +57,8 @@ class PSignIn extends React.Component {
         }
         if (this.state.categoriesAndKeys.length < 2) {
             this.setState({ tableError: 'You need at least 2 qualifications in the table' });
+        } else {
+            this.setState({ tableError: '' });
         }
         return;
     };

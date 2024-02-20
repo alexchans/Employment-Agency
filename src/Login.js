@@ -6,10 +6,6 @@ import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
     state = {
-        username: '',
-        password: '',
-        usernameError: '',
-        passwordError: ''
     };
 
     handleInputChange = (event) => {
@@ -23,7 +19,6 @@ class Login extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault();
         const { username, password } = this.state;
-        this.setState({ usernameError: '', passwordError: '' });
         if (!username) {
             this.setState({ usernameError: 'Username cannot be empty.' });
         } else if (!/^[A-Za-z][A-Za-z0-9]{7,}$/.test(username)) {
@@ -36,11 +31,8 @@ class Login extends React.Component {
         }
         return;
     };
-
-
     render() {
         const { usernameError, passwordError } = this.state;
-
         return (
             <div>
                 <img src={logo} alt="Logo" className="logo" />
