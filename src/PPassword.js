@@ -33,12 +33,12 @@ class PPassword extends React.Component {
         this.setState({ currentpasswordError: '', newpasswordError: '', confirmpasswordError: '' });
         if (!currentpassword) {
             this.setState({ currentpasswordError: 'Current Password cannot be empty.' });
-        } else if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(currentpassword)) {
+        } else if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(currentpassword)) {
             this.setState({ currentpasswordError: 'Password must be at least 8 characters long and include at least one letter and one number.' });
         }
         if (!newpassword) {
             this.setState({ newpasswordError: 'New Password cannot be empty.' });
-        } else if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(newpassword)) {
+        } else if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(currentpassword)) {
             this.setState({ newpasswordError: 'Password must be at least 8 characters long and include at least one letter and one number.' });
         } else if (newpassword === currentpassword) {
             this.setState({ newpasswordError: 'New Password must be different from Current Password.' });
