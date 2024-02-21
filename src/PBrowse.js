@@ -43,14 +43,16 @@ class PBrowse extends React.Component {
                         <li><Link to="/ProfessionalPayment">Payment</Link></li>
                         <li><Link to="/ProfessionalPassword">Change Password</Link></li>
                     </ul>
+                    <div style={{ paddingRight: '70vw' }}>
+                    <h2>Browse Job</h2>
                     <label className="label" htmlFor="search">Search:</label>
                     <div>
                         <input type="text" id="search" name="search" value={search} onChange={this.handleSearch}/>
                     </div>
+                    {showWarning && <p style={{color: 'red'}}>{warningMessage}</p>}
                     <div>
                         <Button variant="contained" size='medium' color='success' onClick={this.handleSearchClick}>yes</Button>
                     </div>
-                    {showWarning && <p style={{color: 'red'}}>{warningMessage}</p>}
                     <div style={{ paddingRight: '50vw' }}>
                         <table>
                             <thead>
@@ -88,6 +90,7 @@ class PBrowse extends React.Component {
                                 </tr>
                             </tbody>
                         </table>
+                        </div>
                     </div>
 
 

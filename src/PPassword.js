@@ -69,26 +69,27 @@ class PPassword extends React.Component {
                         <li><Link to="/ProfessionalPayment">Payment</Link></li>
                         <li><Link to="/ProfessionalPassword">Change Password</Link></li>
                     </ul>
-                    <div style={{paddingRight: '50vw'}}>
+                    <div style={{paddingRight: '70vw'}}>
+                        <h2>Change Password</h2>
                         <div>
                             <label className="label" htmlFor="currentpassword">Current Password:</label>
                         </div>
                         <div>
-                            <input type="text" id="currentpassword" name="currentpassword" value={currentpassword} onChange={this.handleInputChange}/>
+                            <input type="password" id="currentpassword" name="currentpassword" value={currentpassword} onChange={this.handleInputChange}/>
                         </div>
                         <p style={{color: "red"}}>{currentpasswordError}</p>
                         <div>
                             <label className="label" htmlFor="newpassword">New Password:</label>
                         </div>
                         <div>
-                            <input type="text" id="newpassword" name="newpassword" value={newpassword} onChange={this.handleInputChange}/>
+                            <input type="password" id="newpassword" name="newpassword" value={newpassword} onChange={this.handleInputChange}/>
                         </div>
                         <p style={{color: "red"}}>{newpasswordError}</p>
                         <div>
                             <label className="label" htmlFor="confirmpassword">Confirm Password:</label>
                         </div>
                         <div>
-                            <input type="text" id="confirmpassword" name="confirmpassword" value ={confirmpassword} onChange={this.handleInputChange}/>
+                            <input type="password" id="confirmpassword" name="confirmpassword" value ={confirmpassword} onChange={this.handleInputChange}/>
                         </div>
                         <p style={{color: "red"}}>{confirmpasswordError}</p>
                         <div className='center'>
