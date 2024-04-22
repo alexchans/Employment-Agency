@@ -4,6 +4,7 @@ import axios from 'axios';
 import logo from './img/logo.png';
 import Styles from './Login.module.css';
 import Button from '@mui/material/Button';
+import Cookies from 'js-cookie';
 
 function Login() {
     const [state, setState] = useState({
@@ -53,14 +54,23 @@ function Login() {
                 setState(prevState => ({ ...prevState, passwordError: 'Username or Password Wrong' }));
                 return;
             }
-
+            Cookies.set('username', username, { expires: 7 });
             const isStaff = await axios.get(`http://172.24.240.1:8080/api/staff/exists/${username}`);
             const isEmployer = await axios.get(`http://172.24.240.1:8080/api/employer/exists/${username}`);
             const isProfessional = await axios.get(`http://172.24.240.1:8080/api/professionals/exists/${username}`);
 
-            if (isStaff.data) navigate('/StaffUpdateInfo');
-            if (isEmployer.data) navigate('/EmployerProfile');
-            if (isProfessional.data) navigate('/ProfessionalInfo');
+            if (isStaff.data) {
+                navigate('/StaffUpdateInfo');
+                return;
+            }
+            if (isEmployer.data) {
+                navigate('/EmployerProfile');
+                return;
+            }
+            if (isProfessional.data) {
+                navigate('/ProfessionalInfo');
+                return;
+            }
         } catch (error) {
             console.error('Login failed:', error);
             setState(prevState => ({ ...prevState, passwordError: 'An error occurred during login. Please try again later.' }));
