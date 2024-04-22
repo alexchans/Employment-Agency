@@ -2,7 +2,8 @@ import React from 'react';
 import logo from './img/logo.png';
 import Styles from './Login.module.css';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 class Login extends React.Component {
     state = {
@@ -16,22 +17,42 @@ class Login extends React.Component {
         });
     };
 
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault();
         const { username, password } = this.state;
+        let hasError = false;
         if (!username) {
             this.setState({ usernameError: 'Username cannot be empty.' });
+            hasError = true;
         } else if (!/^[A-Za-z][A-Za-z0-9]{7,}$/.test(username)) {
             this.setState({ usernameError: 'Username must be at least 8 characters long and start with a letter.' });
+            hasError = true;
         }
         if (!password) {
             this.setState({ passwordError: 'Password cannot be empty.' });
+            hasError = true;
         } else if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(password)) {
             this.setState({ passwordError: 'Password must be at least 8 characters long and include at least one letter, one number, and one special character.' });
+            hasError = true;
         }
-        return;
+        if (hasError) return;
+        const response = await axios.post(`http://172.24.240.1:8080/api/login/verify`, {
+            username,
+            password
+        });
+        if (!response.data) {
+            this.setState({ passwordError: 'Username or Password Wrong' });
+            return;
+        }
+        const isStaff = await axios.get(`http://172.24.240.1:8080/api/staff/exists/${username}`);
+        const isEmployer = await axios.get(`http://172.24.240.1:8080/api/employer/exists/${username}`);
+        const isProfessional = await axios.get(`http://172.24.240.1:8080/api/professionals/exists/${username}`);
+        if (isStaff.data) console.log('/StaffUpdateInfo');
+        if (isEmployer.data) console.log('/EmployerProfile');
+        if (isProfessional.data) console.log('/ProfessionalInfo');
     };
     render() {
+        const { navigation } = this.props;
         const { usernameError, passwordError } = this.state;
         return (
             <div>

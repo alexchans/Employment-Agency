@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import ESignIn from './ESignIn';
 import PSignIn from './PSignIn';
 import Login from './Login'
@@ -58,6 +58,7 @@ function App() {
         <Route path="/EmployerChangePass" element={<EChangePass />} />
         <Route path="/EmployerPayment" element={<EPay />} />
         <Route path="/EmployerJobList" element={<EJobList />} />
+        <Route path="*" element={<Navigate to="/Login" replace />} />
       </Routes>
     </Router>
   );
