@@ -1,97 +1,109 @@
-import React from 'react';
-import StaffPageTemp from './components/StaffPageTemp'
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
+import StaffPageTemp from './components/StaffPageTemp';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-class StaffAddStaff extends React.Component {
-    state = {
-    };
+function StaffAddStaff() {
+    const [fields, setFields] = useState({
+        first_name: '',
+        last_name: '',
+        username: '',
+        phone_number: '',
+        email: '',
+    });
+    const [errors, setErrors] = useState({});
 
-    handleInputChange = (event) => {
+    const handleInputChange = (event) => {
         const { name, value } = event.target;
-        this.setState({
-            [name]: value,
-            [`${name}Error`]: '',
-        });
+        setFields(prev => ({ ...prev, [name]: value }));
+        setErrors(prevErrors => ({ ...prevErrors, [name]: '' }));
     };
 
-    handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const { username, firstname, lastname, email, phonenumber } = this.state;
-        const fields = { firstname, lastname, email, phonenumber, username };
-        Object.keys(fields).forEach(field => {
-            if (!fields[field]) {
-                this.setState({ [`${field}Error`]: `${field.charAt(0).toUpperCase() + field.slice(1)} cannot be empty.` });
-            }
-        });
-        if (username && !/^[A-Za-z][A-Za-z0-9]{7,}$/.test(username)) {
-            this.setState({ usernameError: 'Username must be at least 8 characters long and start with a letter.' });
+        let newErrors = {};
+        let isValid = true;
+
+        // Validate each field and set errors
+        if (!fields.first_name) {
+            newErrors.first_name = 'First name cannot be empty.';
+            isValid = false;
         }
-        if (email && !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-            this.setState({ emailError: 'Invalid email format.' });
+        if (!fields.last_name) {
+            newErrors.last_name = 'Last name cannot be empty.';
+            isValid = false;
         }
-        if (phonenumber && !/^(\+\d{1,2}\s?)?1?\-?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test(phonenumber)) {
-            this.setState({ phonenumberError: 'Invalid phone number format.' });
+        if (!fields.username) {
+            newErrors.username = 'Username cannot be empty.';
+            isValid = false;
+        } else if (!/^[A-Za-z][A-Za-z0-9]{7,}$/.test(fields.username)) {
+            newErrors.username = 'Username must be at least 8 characters long and start with a letter.';
+            isValid = false;
         }
+        if (!fields.phone_number) {
+            newErrors.phone_number = 'Phone number cannot be empty.';
+            isValid = false;
+        } else if (!/^(\+\d{1,2}\s?)?1?\-?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test(fields.phone_number)) {
+            newErrors.phone_number = 'Invalid phone number format.';
+            isValid = false;
+        }
+        if (!fields.email) {
+            newErrors.email = 'Email cannot be empty.';
+            isValid = false;
+        } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(fields.email)) {
+            newErrors.email = 'Invalid email format.';
+            isValid = false;
+        }
+
+        if (!isValid) {
+            setErrors(newErrors);
+            return;
+        }
+
+        const response = await axios.post(`http://172.24.240.1:8080/api/staff/create`, { username: fields.username, email: fields.email, firstName: fields.first_name, lastName: fields.last_name, phoneNumber: fields.phone_number });
+        newErrors.email = "new staff " + fields.username + " created";
+        setErrors(newErrors);
         return;
     };
-    render() {
-        const { usernameError, emailError, phonenumberError, firstnameError, lastnameError } = this.state;
-        return (
-            <div>
-                <StaffPageTemp />
-                <div className='flex'>
-                    <ul>
-                        <li><Link to="/StaffUpdateInfo">Update Info</Link></li>
-                        <li><Link to="/StaffReviewERequests">Review E Requests</Link></li>
-                        <li><Link to="/StaffReviewPRequests">Review P Requests</Link></li>
-                        <li><Link to="/StaffDeleteAccounts">Delete Accounts</Link></li>
-                        <li><Link to="/StaffViewEAccounts">View E Accounts</Link></li>
-                        <li><Link to="/StaffViewPAccounts">View P Accounts</Link></li>
-                        <li><Link to="/StaffMatching">Initiate Matching</Link></li>
-                        <li><Link to="/StaffAddStaff">Add Staff</Link></li>
-                        <li><Link to="/StaffChangePassword">Change Password</Link></li>
-                    </ul>
-                    <form onSubmit={this.handleSubmit} style={{ paddingRight: '70vw' }}>
-                        <h2>Add New Staff</h2>
-                        <label className="label" htmlFor="firstname">First Name:</label>
-                        <div>
-                            <input type="text" id="firstname" name="firstname" value={this.state.firstname}
-                                onChange={this.handleInputChange} />
-                        </div>
-                        <p style={{ color: "red" }}>{firstnameError}</p>
-                        <label className="label" htmlFor="lastname">Last Name:</label>
-                        <div>
-                            <input type="text" id="lastname" name="lastname" value={this.state.lastname}
-                                onChange={this.handleInputChange} />
-                        </div>
-                        <p style={{ color: "red" }}>{lastnameError}</p>
-                        <label className="label" htmlFor="username">Preferred Username:</label>
-                        <div>
-                            <input type="text" id="username" name="username" value={this.state.username}
-                                onChange={this.handleInputChange} />
-                        </div>
-                        <p style={{ color: "red" }}>{usernameError}</p>
-                        <label className="label" htmlFor="phonenumber">Phone Number:</label>
-                        <div>
-                            <input type="text" id="phonenumber" name="phonenumber" value={this.state.phonenumber}
-                                onChange={this.handleInputChange} />
-                        </div>
-                        <p style={{ color: "red" }}>{phonenumberError}</p>
-                        <label className="label" htmlFor="email">Email:</label>
-                        <div>
-                            <input type="text" id="email" name="email" value={this.state.email}
-                                onChange={this.handleInputChange} />
-                        </div>
-                        <p style={{ color: "red" }}>{emailError}</p>
-                        <div style={{ paddingTop: '3vh' }}>
-                            <Button type="submit" variant="contained" size='medium'>Submit</Button>
-                        </div>
-                    </form>
-                </div>
+
+    return (
+        <div>
+            <StaffPageTemp />
+            <div className='flex'>
+                <ul>
+                    <li><Link to="/StaffUpdateInfo">Update Info</Link></li>
+                    <li><Link to="/StaffReviewERequests">Review E Requests</Link></li>
+                    <li><Link to="/StaffReviewPRequests">Review P Requests</Link></li>
+                    <li><Link to="/StaffDeleteAccounts">Delete Accounts</Link></li>
+                    <li><Link to="/StaffViewEAccounts">View E Accounts</Link></li>
+                    <li><Link to="/StaffViewPAccounts">View P Accounts</Link></li>
+                    <li><Link to="/StaffMatching">Initiate Matching</Link></li>
+                    <li><Link to="/StaffAddStaff">Add Staff</Link></li>
+                    <li><Link to="/StaffChangePassword">Change Password</Link></li>
+                </ul>
+                <form onSubmit={handleSubmit} style={{ paddingRight: '70vw' }}>
+                    <h2>Add New Staff</h2>
+                    <label className="label" htmlFor="first_name">First Name:</label>
+                    <input type="text" id="first_name" name="first_name" value={fields.first_name} onChange={handleInputChange} />
+                    <p style={{ color: "red" }}>{errors.first_name}</p>
+                    <label className="label" htmlFor="last_name">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name" value={fields.last_name} onChange={handleInputChange} />
+                    <p style={{ color: "red" }}>{errors.last_name}</p>
+                    <label className="label" htmlFor="username">Preferred Username:</label>
+                    <input type="text" id="username" name="username" value={fields.username} onChange={handleInputChange} />
+                    <p style={{ color: "red" }}>{errors.username}</p>
+                    <label className="label" htmlFor="phone_number">Phone Number:</label>
+                    <input type="text" id="phone_number" name="phone_number" value={fields.phone_number} onChange={handleInputChange} />
+                    <p style={{ color: "red" }}>{errors.phone_number}</p>
+                    <label className="label" htmlFor="email">Email:</label>
+                    <input type="text" id="email" name="email" value={fields.email} onChange={handleInputChange} />
+                    <p style={{ color: "red" }}>{errors.email}</p>
+                    <Button type="submit" variant="contained" size='medium'>Submit</Button>
+                </form>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default StaffAddStaff;
