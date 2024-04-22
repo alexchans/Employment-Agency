@@ -1,91 +1,118 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
-import StaffPageTemp from './components/StaffPageTemp'
+import StaffPageTemp from './components/StaffPageTemp';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
-class StaffChangePassword extends React.Component {
-    state = {
-    };
+function StaffChangePassword() {
+    const username = Cookies.get('username');
+    const userType = "Staff";
 
-    handleInputChange = (event) => {
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [currentPasswordError, setCurrentPasswordError] = useState('');
+    const [newPasswordError, setNewPasswordError] = useState('');
+    const [confirmPasswordError, setConfirmPasswordError] = useState('');
+
+    const handleInputChange = (event) => {
         const { name, value } = event.target;
-        this.setState({
-            [name]: value,
-            [`${name}Error`]: '',
-        });
+        switch (name) {
+            case 'currentpassword':
+                setCurrentPassword(value);
+                setCurrentPasswordError('');
+                break;
+            case 'newpassword':
+                setNewPassword(value);
+                setNewPasswordError('');
+                break;
+            case 'confirmpassword':
+                setConfirmPassword(value);
+                setConfirmPasswordError('');
+                break;
+            default:
+                break;
+        }
     };
 
-    handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const { currentpassword, newpassword, confirmpassword } = this.state;
-        if (!currentpassword) {
-            this.setState({ currentpasswordError: 'Current Password cannot be empty.' });
-        } else if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(currentpassword)) {
-            this.setState({ currentpasswordError: 'Password must be at least 8 characters long and include at least one letter and one number.' });
+        let isValid = true;
+
+        if (!currentPassword) {
+            setCurrentPasswordError('Current Password cannot be empty.');
+            isValid = false;
+        } else if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(currentPassword)) {
+            setCurrentPasswordError('Password must be at least 8 characters long and include at least one letter and one number.');
+            isValid = false;
         }
-        if (!newpassword) {
-            this.setState({ newpasswordError: 'New Password cannot be empty.' });
-        } else if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(newpassword)) {
-            this.setState({ newpasswordError: 'Password must be at least 8 characters long and include at least one letter and one number.' });
-        } else if (newpassword === currentpassword) {
-            this.setState({ newpasswordError: 'New Password must be different from Current Password.' });
+
+        if (!newPassword) {
+            setNewPasswordError('New Password cannot be empty.');
+            isValid = false;
+        } else if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(newPassword)) {
+            setNewPasswordError('Password must be at least 8 characters long and include at least one letter and one number.');
+            isValid = false;
+        } else if (newPassword === currentPassword) {
+            setNewPasswordError('New Password must be different from Current Password.');
+            isValid = false;
         }
-        if (!confirmpassword) {
-            this.setState({ confirmpasswordError: 'Confirm Password cannot be empty.' });
-        } else if (confirmpassword !== newpassword) {
-            this.setState({ confirmpasswordError: 'Passwords do not match.' });
+
+        if (!confirmPassword) {
+            setConfirmPasswordError('Confirm Password cannot be empty.');
+            isValid = false;
+        } else if (confirmPassword !== newPassword) {
+            setConfirmPasswordError('Passwords do not match.');
+            isValid = false;
+        }
+
+        if (!isValid) return;
+
+        const response = await axios.put(`http://172.24.240.1:8080/api/login/update-password/${newPassword}`, {
+            username,
+            password: currentPassword,
+            userType
+        });
+        if (response.data) {
+            setConfirmPasswordError('Password changed successfully');
+        } else {
+            setConfirmPasswordError('Current password is not correct');
         }
         return;
     };
-    render() {
-        const { currentpasswordError, newpasswordError, confirmpasswordError } = this.state;
-        return (
-            <div>
-                <StaffPageTemp />
-                <div className='flex'>
-                    <ul>
-                        <li><Link to="/StaffUpdateInfo">Update Info</Link></li>
-                        <li><Link to="/StaffReviewERequests">Review E Requests</Link></li>
-                        <li><Link to="/StaffReviewPRequests">Review P Requests</Link></li>
-                        <li><Link to="/StaffDeleteAccounts">Delete Accounts</Link></li>
-                        <li><Link to="/StaffViewEAccounts">View E Accounts</Link></li>
-                        <li><Link to="/StaffViewPAccounts">View P Accounts</Link></li>
-                        <li><Link to="/StaffMatching">Initiate Matching</Link></li>
-                        <li><Link to="/StaffAddStaff">Add Staff</Link></li>
-                        <li><Link to="/StaffChangePassword">Change Password</Link></li>
-                    </ul>
-                    <form onSubmit={this.handleSubmit} style={{ paddingRight: '68vw' }}>
-                        <h2>Change Password</h2>
-                        <div>
-                            <label className="label" htmlFor="currentpassword">Current Password:</label>
-                        </div>
-                        <div>
-                            <input type="password" id="currentpassword" name="currentpassword" value={this.state.currentpassword} onChange={this.handleInputChange} />
-                        </div>
-                        <p style={{ color: "red" }}>{currentpasswordError}</p>
-                        <div>
-                            <label className="label" htmlFor="newpassword">New Password:</label>
-                        </div>
-                        <div>
-                            <input type="password" id="newpassword" name="newpassword" value={this.state.newpassword} onChange={this.handleInputChange} />
-                        </div>
-                        <p style={{ color: "red" }}>{newpasswordError}</p>
-                        <div>
-                            <label className="label" htmlFor="confirmpassword">Confirm Password:</label>
-                        </div>
-                        <div>
-                            <input type="password" id="confirmpassword" name="confirmpassword" value={this.state.confirmpassword} onChange={this.handleInputChange} />
-                        </div>
-                        <p style={{ color: "red" }}>{confirmpasswordError}</p>
-                        <div className='center'>
-                            <Button type="submit" variant="contained" size='medium' color='success'>Change Password</Button>
-                        </div>
-                    </form>
-                </div>
+
+    return (
+        <div>
+            <StaffPageTemp />
+            <div className='flex'>
+                <ul>
+                    <li><Link to="/StaffUpdateInfo">Update Info</Link></li>
+                    <li><Link to="/StaffReviewERequests">Review E Requests</Link></li>
+                    <li><Link to="/StaffReviewPRequests">Review P Requests</Link></li>
+                    <li><Link to="/StaffDeleteAccounts">Delete Accounts</Link></li>
+                    <li><Link to="/StaffViewEAccounts">View E Accounts</Link></li>
+                    <li><Link to="/StaffViewPAccounts">View P Accounts</Link></li>
+                    <li><Link to="/StaffMatching">Initiate Matching</Link></li>
+                    <li><Link to="/StaffAddStaff">Add Staff</Link></li>
+                    <li><Link to="/StaffChangePassword">Change Password</Link></li>
+                </ul>
+                <form onSubmit={handleSubmit} style={{ paddingRight: '68vw' }}>
+                    <h2>Change Password</h2>
+                    <label className="label" htmlFor="currentpassword">Current Password:</label>
+                    <input type="password" id="currentpassword" name="currentpassword" value={currentPassword} onChange={handleInputChange} />
+                    <p style={{ color: "red" }}>{currentPasswordError}</p>
+                    <label className="label" htmlFor="newpassword">New Password:</label>
+                    <input type="password" id="newpassword" name="newpassword" value={newPassword} onChange={handleInputChange} />
+                    <p style={{ color: "red" }}>{newPasswordError}</p>
+                    <label className="label" htmlFor="confirmpassword">Confirm Password:</label>
+                    <input type="password" id="confirmpassword" name="confirmpassword" value={confirmPassword} onChange={handleInputChange} />
+                    <p style={{ color: "red" }}>{confirmPasswordError}</p>
+                    <Button type="submit" variant="contained" size='medium' color='success'>Change Password</Button>
+                </form>
             </div>
-        );
-    }
+        </div>
+    );
 }
+
 export default StaffChangePassword;
-
-

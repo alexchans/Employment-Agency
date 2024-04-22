@@ -3,6 +3,7 @@ import StaffPageTemp from './components/StaffPageTemp';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import axios from 'axios';
 
 function StaffUpdateInfo() {
     const username = Cookies.get('username');
@@ -27,7 +28,7 @@ function StaffUpdateInfo() {
         }
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         let isValid = true;
 
@@ -41,10 +42,12 @@ function StaffUpdateInfo() {
             isValid = false;
         }
 
-        if (isValid) {
-            // If form is valid, process the data submission here
-            console.log('Form is valid. Process the submission.');
+        if (!isValid) {
+            return;
         }
+        const response = await axios.put(`http://172.24.240.1:8080/api/staff/update/${username}/${phonenumber}/${email}`);
+        setEmailError('Password and Email Updated Successfully');
+        return;
     };
 
     return (
