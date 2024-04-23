@@ -26,9 +26,16 @@ const defaultProps = {
     text: 'Start Time',
 };
 
-const InputField = (props) => {
+const InputField = ({ text = 'Start Time', onChange, value, name }) => {
     return (
-        <input style={styles.Input} placeholder={props.text ?? defaultProps.text} />
+        <input
+            type="time"
+            style={styles.Input}
+            placeholder={text}
+            value={value} // Controlled component
+            onChange={onChange} // Handle changes
+            name={name} // Identify the field
+        />
     );
 };
 

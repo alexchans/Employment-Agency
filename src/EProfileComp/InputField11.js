@@ -20,14 +20,19 @@ const styles = {
     },
 };
 
-const defaultProps = {
+/*const defaultProps = {
     text: 'Email address',
-};
+};*/
 
-const InputField = (props) => {
+const InputField = ({ text = 'Email address', onChange, value, name }) => {
     return (
-        <input style={styles.Input} placeholder={props.text ?? defaultProps.text} />
+        <input
+            style={styles.Input}
+            placeholder={text}
+            value={value} // Controlled component
+            onChange={onChange} // Handle changes
+            name={name} // Identify the field
+        />
     );
 };
-
 export default InputField;

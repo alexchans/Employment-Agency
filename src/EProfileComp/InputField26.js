@@ -22,14 +22,16 @@ const styles = {
     },
 };
 
-const InputField = ({ placeholder, value, onChange, text }) => {
+const InputField = ({text, value, onChange, name}) => {
     return (
         <input
-            type="text" // Ensure you're specifying the correct type
+            /*type="text"*/ // Ensure you're specifying the correct type
             style={styles.Input}
-            value={text}
+            placeholder={text}
+            value={value}
             onChange={onChange} // Ensure onChange is correctly passed and used
-            placeholder={placeholder}
+            /*placeholder={placeholder}*/
+            name={name}
         />
     );
 };

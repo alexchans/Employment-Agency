@@ -20,13 +20,20 @@ const styles = {
     },
 };
 
-const defaultProps = {
+/*const defaultProps = {
     text: 'New Password',
-};
+};*/
 
-const InputField = (props) => {
+const InputField = ({ text = 'New Password', onChange, value, name, type }) => {
     return (
-        <input style={styles.Input} placeholder={props.text ?? defaultProps.text} />
+        <input
+            style={styles.Input}
+            placeholder={text}
+            value={value} // Controlled component
+            onChange={onChange} // Handle changes
+            name={name} // Identify the field
+            type={type} // Use the `type` prop here
+        />
     );
 };
 

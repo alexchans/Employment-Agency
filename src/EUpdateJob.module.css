@@ -369,3 +369,125 @@
     outline: none;
     position: absolute;
 }
+
+
+.error {
+    color: #ff0000;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    line-height: 18px;
+    position: absolute;
+    margin-left: 205px;
+    margin-top: 260px;
+}
+
+.error2 {
+    color: #ff0000;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    line-height: 18px;
+    position: absolute;
+    margin-left: 605px;
+    margin-top: 260px;
+}
+
+.error3 {
+    color: #ff0000;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    line-height: 18px;
+    position: absolute;
+    margin-left: 205px;
+    margin-top: 470px;
+}
+
+.error4 {
+    color: #ff0000;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    line-height: 18px;
+    position: absolute;
+    margin-left: 605px;
+    margin-top: 470px;
+}
+
+.error5 {
+    color: #ff0000;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    line-height: 18px;
+    position: absolute;
+    margin-left: 205px;
+    margin-top: 570px;
+}
+
+.error6 {
+    color: #ff0000;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    line-height: 18px;
+    position: absolute;
+    margin-left: 205px;
+    margin-top: 710px;
+}
+
+.error7 {
+    color: #ff0000;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    line-height: 18px;
+    position: absolute;
+    margin-left: 605px;
+    margin-top: 710px;
+}
+
+.error8 {
+    color: #ff0000;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    line-height: 18px;
+    position: absolute;
+    margin-left: 205px;
+    margin-top: 810px;
+}
+
+.error9 {
+    color: #ff0000;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    line-height: 18px;
+    position: absolute;
+    margin-left: 605px;
+    margin-top: 810px;
+}
+
+.error10 {
+    color: #ff0000;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    line-height: 18px;
+    position: absolute;
+    margin-left: 995px;
+    margin-top: -68px;
+}
+
+.error11 {
+    color: #ff0000;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    line-height: 18px;
+    position: absolute;
+    margin-left: 995px;
+    margin-top: 365px;
+}

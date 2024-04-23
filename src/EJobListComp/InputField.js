@@ -1,10 +1,10 @@
 import React from 'react';
-
+// Modify InputField to accept onChange prop
 const styles = {
     Input: {
-        top: '75px',
-        left: '1053px',
-        width: '400px',
+        top: '175px',
+        left: '705px',
+        width: '200px',
         height: '38px',
         padding: '0px 8px',
         border: '1px solid #ffffff',
@@ -20,14 +20,14 @@ const styles = {
     },
 };
 
-const defaultProps = {
-    text: 'Search by Job ID',
-};
-
-const InputField = (props) => {
+const InputField = ({ text, onChange, placeholder }) => {
     return (
-        <input style={styles.Input} placeholder={props.text ?? defaultProps.text} />
+        <input
+            style={styles.Input}
+            value={text}
+            onChange={onChange}
+            placeholder={placeholder ?? 'Search by Job ID'}
+        />
     );
 };
-
-//export default InputField;
+export default InputField;

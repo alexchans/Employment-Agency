@@ -27,12 +27,13 @@ const defaultProps = {
     label: 'Pay $50.00',
 };
 
-const Button = (props) => {
+const Button = ({ label, onClick }) => {
     return (
-        <button style={styles.Button}>
-            {props.label ?? defaultProps.label}
+        <button style={styles.Button} onClick={onClick}>
+            {label}
         </button>
     );
 };
+
 
 export default Button;

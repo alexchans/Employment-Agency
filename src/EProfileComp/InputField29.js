@@ -2,8 +2,8 @@ import React from 'react';
 
 const styles = {
     Input: {
-        top: '229px',
-        left: '450px',
+        top: '555px',
+        left: '440px',
         width: '348px',
         height: '58px',
         padding: '0px 8px',
@@ -17,16 +17,14 @@ const styles = {
         lineHeight: '19px',
         outline: 'none',
         position: 'absolute',
-        marginTop: '-30px',
-        marginLeft: '-13px',
     },
 };
 
 /*const defaultProps = {
-    text: 'First Name',
+    text: 'Username',
 };*/
 
-const InputField = ({ text = 'First Name', onChange, value, name }) => {
+const InputField = ({ text = 'Confirm Password', onChange, value, name, type }) => {
     return (
         <input
             style={styles.Input}
@@ -34,6 +32,7 @@ const InputField = ({ text = 'First Name', onChange, value, name }) => {
             value={value} // Controlled component
             onChange={onChange} // Handle changes
             name={name} // Identify the field
+            type={type} // Use the `type` prop here
         />
     );
 };

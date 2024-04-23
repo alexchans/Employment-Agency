@@ -1,4 +1,7 @@
 import React from 'react';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+
 
 const styles = {
     Input: {
@@ -26,9 +29,17 @@ const defaultProps = {
     text: 'End Time',
 };
 
-const InputField = (props) => {
+const InputField = ({ text = 'End Time', onChange, value, name }) => {
     return (
-        <input style={styles.Input} placeholder={props.text ?? defaultProps.text} />
+        <input
+            type="time"
+            style={styles.Input}
+            placeholder={text}
+            value={value} // Controlled component
+            onChange={onChange} // Handle changes
+            name={name} // Identify the field
+        />
+
     );
 };
 

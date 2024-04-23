@@ -26,7 +26,24 @@ const styles = {
     text: 'Keywords / Key Phrases',
 };*/
 
-const InputField = ({ placeholder, value, onChange, text }) => {
+
+const InputField = ({text, value, onChange, name}) => {
+    return (
+        <input
+            /*type="text"*/ // Ensure you're specifying the correct type
+            style={styles.Input}
+            placeholder={text}
+            value={value}
+            onChange={onChange} // Ensure onChange is correctly passed and used
+            /*placeholder={placeholder}*/
+            name={name}
+        />
+    );
+};
+
+
+/*
+const InputField = ({ placeholder, value, onChange, text, name }) => {
     return (
         <input
             type="text" // Ensure you're specifying the correct type
@@ -34,9 +51,11 @@ const InputField = ({ placeholder, value, onChange, text }) => {
             value={text}
             onChange={onChange} // Ensure onChange is correctly passed and used
             placeholder={placeholder}
+            name={name} // Identify the field
         />
     );
 };
+*/
 
 /*const InputField = ({ text, onChange, placeholder }) => {
     return (

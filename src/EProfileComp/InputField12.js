@@ -20,13 +20,19 @@ const styles = {
     },
 };
 
-const defaultProps = {
+/*const defaultProps = {
     text: '(214) 123 3434',
-};
+};*/
 
-const InputField = (props) => {
+const InputField = ({ text = 'XXX-XXX-XXXX', onChange, value, name }) => {
     return (
-        <input style={styles.Input} placeholder={props.text ?? defaultProps.text} />
+        <input
+            style={styles.Input}
+            placeholder={text}
+            value={value} // Controlled component
+            onChange={onChange} // Handle changes
+            name={name} // Identify the field
+        />
     );
 };
 

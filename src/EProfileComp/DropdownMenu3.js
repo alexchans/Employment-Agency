@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+
 
 const styles = {
     DropdownButton: {
@@ -6,11 +8,11 @@ const styles = {
         width: '120px',
         height: '36px',
         padding: '0px 8px',
-        border: '1px solid #ffffff',
+        //border: '1px solid #ffffff',
         borderRadius: '8px',
         boxShadow: '0px 0px 10px rgba(0,0,0,0.1)',
         backgroundColor: '#161616',
-        color: '#ffffff',
+        //color: '#ffffff',
         fontSize: '16px',
         fontWeight: 700,
         fontFamily: 'Source Sans Pro',
@@ -20,8 +22,8 @@ const styles = {
         justifyContent: 'center',
         alignItems: 'center',
         position: 'relative', // Use relative for positioning the dropdown list correctly
-        marginTop: '-279px',
-        marginLeft: '1315px'
+        marginTop: '-278px',
+        marginLeft: '1318px'
     },
     DropdownList: {
         position: 'absolute',
@@ -50,7 +52,7 @@ const styles = {
 };
 
 
-const Dropdown2 = ({ label = 'EAlexChen', values = ['Profile', 'Change Password', 'Logout'] }) => {
+const Dropdown3 = ({ label = 'EAlexChen' }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -65,6 +67,13 @@ const Dropdown2 = ({ label = 'EAlexChen', values = ['Profile', 'Change Password'
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    // Define the dropdown items with their paths
+    const dropdownItems = [
+        { name: 'Profile', path: '/EmployerProfile' },
+        { name: 'Change Password', path: '/EmployerChangePass' },
+        { name: 'Logout', path: '/Login' },
+    ];
+
     return (
         <div ref={dropdownRef} style={{ position: 'relative' }}>
             <div style={styles.DropdownButton} onClick={() => setIsOpen(!isOpen)}>
@@ -72,16 +81,16 @@ const Dropdown2 = ({ label = 'EAlexChen', values = ['Profile', 'Change Password'
             </div>
             {isOpen && (
                 <ul style={styles.DropdownList}>
-                    {values.map((value) => (
+                    {dropdownItems.map((item) => (
                         <li
                             style={styles.DropdownItem}
-                            key={value}
-                            onClick={() => {
-                                console.log(`${value} selected`); // Handle selection
-                                setIsOpen(false); // Close dropdown after selection
-                            }}
+                            key={item.name}
+                            onClick={() => setIsOpen(false)} // Close dropdown after selection
                         >
-                            {value}
+                            {/* Wrap each item name with a Link component */}
+                            <Link to={item.path} style={{ color: '#ffffff', textDecoration: 'none' }}>
+                                {item.name}
+                            </Link>
                         </li>
                     ))}
                 </ul>
@@ -90,5 +99,4 @@ const Dropdown2 = ({ label = 'EAlexChen', values = ['Profile', 'Change Password'
     );
 };
 
-export default Dropdown2;
-
+export default Dropdown3;

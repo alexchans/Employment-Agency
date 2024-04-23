@@ -2,30 +2,47 @@ import React, { useState } from 'react';
 import InputField26 from './InputField26';
 import InputField27 from './InputField27';
 import Button from './Button1';
+import Styles from "../ECreateJob.module.css";
 
-const TableComponent = () => {
-    // State to store table rows
+const TableComponent = ({ updateRowsCount }) => {
+
     const [rows, setRows] = useState([]);
-
-    // Temporary state to store the current inputs
     const [category, setCategory] = useState('');
     const [keywords, setKeywords] = useState('');
+    // State to manage the error message visibility
+    const [categoryError, setCategoryError] = useState(false);
 
-    // Function to handle adding a new row
     const handleAddRow = () => {
-        const newRow = { category, keywords };
-        setRows([...rows, newRow]);
-        // Optionally clear the input fields after adding
+        if (!category.trim() || !keywords.trim()) {
+            alert("Both category and keywords are required.");
+            return;
+        }
+        const newRows = [...rows, { category, keywords: keywords.split(',').map(kw => kw.trim()) }];
+        setRows(newRows);
         setCategory('');
         setKeywords('');
+        // Check if adding this row resolves the error condition
+        setCategoryError(newRows.length < 2);
+        updateRowsCount(newRows.length);
     };
+    React.useEffect(() => {
+        updateRowsCount(rows.length);
+    }, [rows.length, updateRowsCount]);
+
 
     return (
         <div>
             {/* Inputs for category and keywords */}
-            <InputField26 text={category} onChange={(e) => setCategory(e.target.value)} placeholder="Category" />
-            <InputField27 text={keywords} onChange={(e) => setKeywords(e.target.value)} placeholder="Keywords / Key Phrases"/>
-            <Button onClick={handleAddRow} label="Add" />
+            {/* Inputs for category and keywords */}
+            <InputField26 value={category} onChange={(e) => setCategory(e.target.value)} />
+            <InputField27 value={keywords} onChange={(e) => setKeywords(e.target.value)} />
+            <Button onClick={handleAddRow} label="Add Category" />
+            {/* Display error message if there are fewer than two categories */}
+            {categoryError && (
+                <div className={Styles.error10}>
+                    You need to add at least two categories, each with at least one keyword.
+                </div>
+            )}
 
             {/* Table to display the rows */}
             <table style = {{
