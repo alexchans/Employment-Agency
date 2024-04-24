@@ -1,226 +1,252 @@
-import React from 'react';
-import DateInput from './EProfileComp/react-datepicker';
+import React, { useState } from 'react';
+import axios from 'axios';
+import styled from 'styled-components';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { format } from 'date-fns';
+import EmpPageTemp from "./components/EmpPageTemp";
 import Styles from "./ECreateJob.module.css";
-import Image from "./EProfileComp/Image";
-import Input15 from "./EProfileComp/InputField15";
-import DateInput2 from "./EProfileComp/react-datapicker2";
-import Input17 from "./EProfileComp/InputField17";
-import Input18 from "./EProfileComp/InputField18";
-import Input19 from "./EProfileComp/InputField19";
-import Input20 from "./EProfileComp/InputField20";
-import Input21 from "./EProfileComp/InputField21";
-import Input22 from "./EProfileComp/InputField22";
-import Input23 from "./EProfileComp/InputField23";
-import Input24 from "./EProfileComp/InputField24";
-import Input25 from "./EProfileComp/InputField25";
-import Input26 from "./EProfileComp/InputField26";
-import Input27 from "./EProfileComp/InputField27";
-import Button1 from "./EProfileComp/Button1";
-import TableCatKey from"./EProfileComp/TableCatKey";
-import DropdownMenu from"./EProfileComp/DropdownMenu2"
-import {Link} from "react-router-dom";
 
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+    padding: 120px 20px 20px;
+`;
 
+const FormWrapper = styled.div`
+  width: 100%;
+  max-width: 500px;
+    position: absolute;
+    top: 170px;
+    
+`;
 
-class ECreateJob extends React.Component {
-    state = {
-        positionName: '',
-        positionID: '',
-        startDate: null,
-        endDate: null,
-        startTime: '',
-        endTime: '',
-        payPerHour: '',
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+const Input = styled.input`
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ffffff;
+    background-color: #000000;
+    color: #ffffff;
+`;
+
+const TextArea = styled.textarea`
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ffffff;
+    background-color: #000000;
+    color: #ffffff;
+`;
+
+const Button = styled.button`
+  padding: 10px 15px;
+  border-radius: 4px;
+  border: none;
+  color: #fff;
+  background-color: #007bff;
+  cursor: pointer;
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
+const ErrorMessage = styled.p`
+  color: red;
+  font-size: 0.8rem;
+`;
+
+function JobForm() {
+    const [job, setJob] = useState({
+        position: '',
+        company: '',
+        description: '',
+        listOfQualifications: '',
+        category: '',
+        keyWords: '',
         firstName: '',
         lastName: '',
-        emailAddress: '',
-        phoneNumber: '',
-        /* rows: [],*/
-        categories: '',
-        rowsCount: 0,
-        categoryCountError: '',
-        errors: {}
+        email: '',
+        startDate: '',
+        endDate: '',
+        startTime: '',
+        endTime: '',
+        wage: ''
+    });
 
-    };
+    const [errors, setErrors] = useState({});
 
-    handleInputChange = (event) => {
-        const { name, value } = event.target;
-        this.setState(prevState => ({
-            ...prevState,
-            [name]: value,
-            errors: {
-                ...prevState.errors,
-                [name]: '' // Clear the error message for this field
-            }
-        }), () => {
-            // If you want to validate immediately after state update
-            if (name === 'categories') {
-                this.validateCategoryField();
-            }
-        });
-    };
-
-    validateCategoryField = () => {
-        this.setState({ errors: {...this.state.errors, categories: ''} });
-    };
-
-
-    updateRowsCount = (newCount) => {
-        this.setState({ rowsCount: newCount });
-    };
-
-
-
-    validateForm = () => {
-        const { positionName, positionID, startDate, endDate, startTime, endTime, payPerHour, firstName, lastName, emailAddress, phoneNumber, categories, keywords } = this.state;
-        let errors = {};
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const phoneRegex = /^\d{3}-\d{3}-\d{4}$/; // Adjust based on your needs
-        const numberRegex = /^\d+(\.\d+)?$/; // This regex supports integers and decimals
-
-
-        if (!positionName) errors.positionName = "Position name is required.";
-        if (!positionID) errors.positionID = "Position ID is required.";
-        if (!startDate) errors.startDate = "Start date is required.";
-        if (!endDate) errors.endDate = "End date is required.";
-        if (!startTime) errors.startTime = "Start time is required.";
-        if (!endTime) errors.endTime = "End time is required.";
-        if (!payPerHour || !numberRegex.test(payPerHour) || parseFloat(payPerHour) <= 0) {
-            errors.payPerHour = "Pay per hour must be a positive number.";
-        }
-        if (!firstName) errors.firstName = "First name is required.";
-        if (!lastName) errors.lastName = "Last name is required.";
-        if (!emailAddress || !emailRegex.test(emailAddress)) errors.emailAddress = "Invalid email address.";
-        if (!phoneNumber || !phoneRegex.test(phoneNumber)) errors.phoneNumber = "Invalid phone number.";
-        if (!this.state.categories.trim()) {
-            errors.categories = "Missing value";
-        } else {
-            errors.categories = ""; // Clear the error if the category is not empty
-        }
-
-        this.setState({ errors });
-        //return Object.keys(errors).length === 0;
-        return Object.keys(errors).every(key => errors[key] === "");
-    };
-
-
-    handleSubmit = (event) => {
-
-
-        event.preventDefault();
-        if (this.validateForm()) {
-            console.log("Form is valid. Proceed with form submission.");
-            // Proceed with form submission logic here...
-        }
-        else if (this.state.rowsCount < 2) {
-            alert("You need to add at least two categories.");
-
-        }
-
-        else {
-            console.log("Validation errors exist.");
+    const handleChange = (e) => {
+        setJob({ ...job, [e.target.name]: e.target.value });
+        if (errors[e.target.name]) {
+            setErrors({ ...errors, [e.target.name]: null });
         }
     };
 
+    const validateForm = () => {
+        const newErrors = {};
+        if (!job.position.trim()) newErrors.position = 'Position is required.';
+        if (!job.company.trim()) newErrors.company = 'Company name is required.';
+        if (!job.description.trim()) newErrors.description = 'Description is required.';
+        if (!job.category.trim()) newErrors.category = 'Category is required.';
+        if (!job.keyWords.trim()) newErrors.keyWords = 'Keywords are required.';
+        if (!job.firstName.trim()) newErrors.firstName = 'First name is required.';
+        if (!job.lastName.trim()) newErrors.lastName = 'Last name is required.';
+        if (!job.email.trim()) {
+            newErrors.email = 'Email is required.';
+        } else if (!/\S+@\S+\.\S+/.test(job.email)) {
+            newErrors.email = 'Email address is invalid.';
+        }
+        if (!job.startDate) newErrors.startDate = 'Start date is required.';
+        if (!job.endDate) newErrors.endDate = 'End date is required.';
+        if (!job.startTime) newErrors.startTime = 'Start time is required.';
+        if (!job.endTime) newErrors.endTime = 'End time is required.';
+        if (job.wage === '') newErrors.wage = 'Wage is required.';
+        else if (isNaN(job.wage)) newErrors.wage = 'Wage must be a number.';
 
-    render() {
-        return (
-            <div className={Styles.screen}>
-                <div className={Styles.header}>Employer Space</div>
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
-                <div className={Styles.icon2}>
-                    <svg viewBox="0 0 24 24">
-                        <path d="M0 0h24v24H0V0z" fill="none"></path>
-                        <path
-                            d="m17 8-1.41 1.41L17.17 11H9v2h8.17l-1.58 1.58L17 16l4-4-4-4zM5 5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h7v-2H5V5z"></path>
-                    </svg>
-                </div>
-                <div className={Styles.HorizontalDivider}></div>
+
+    const formatDateAndTime = () => {
+        return {
+            ...job,
+            startDate: format(new Date(job.startDate), 'yyyy-MM-dd'),  // Adjust date format to match Java LocalDate
+            endDate: format(new Date(job.endDate), 'yyyy-MM-dd'),
+            startTime: job.startTime + ':00',  // Adjust time format to include seconds
+            endTime: job.endTime + ':00'
+        };
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!validateForm()) {
+            console.error('Validation failed', errors);
+            return;
+        }
+
+        try {
+            const formattedJob = formatDateAndTime();
+            console.log('Submitting job:', JSON.stringify(formattedJob));  // Log the formatted job to console
+            const response = await axios.post('http://localhost:8080/api/job/create', formattedJob, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log('Job submitted successfully', response.data);
+            toast.success('Job submitted successfully!');
+            setJob({
+                position: '', company: '', description: '', listOfQualifications: '',  category: '', keyWords: '',
+                firstName: '', lastName: '', email: '', startDate: '', endDate: '',
+                startTime: '', endTime: '', wage: ''
+            });
+        } catch (error) {
+            console.error('Failed to submit job:', error);
+            toast.error(`Failed to submit job: ${error.response?.data || 'Server error'}`);
+        }
+    };
+
+    return (
+        <div>
+            <EmpPageTemp/>
+            <ul>
+                <li><Link to="/EmployerProfile">Contact Info</Link></li>
+                <li><Link to="/EmployerCreateJob">Create Job</Link></li>
+                <li><Link to="/EmployerUpdateJob">Update Job</Link></li>
+                <li><Link to="/EmployerJobList">Job List</Link></li>
+                <li><Link to="/EmployerPayment">Billing</Link></li>
+                <li><Link to="/EmployerChangePass">Change Password</Link></li>
+                <li><Link to="/EmployerDelete">Delete Account</Link></li>
+            </ul>
                 <div className={Styles.subheader}>Create Job</div>
-                <div className={Styles.label1}>Job Information</div>
                 <div className={Styles.divider2}></div>
+                <Container>
+                    <FormWrapper>
+                        <ToastContainer/>
+                        <Form onSubmit={handleSubmit}>
+                            <label>Position Name</label>
+                            <Input type="text" name="position" value={job.position} onChange={handleChange}
+                                   placeholder="Position"/>
+                            {errors.position && <ErrorMessage>{errors.position}</ErrorMessage>}
 
-                <div className={Styles.label2}>Position Name</div>
-                <Input15 name="positionName" value={this.state.positionName} onChange={this.handleInputChange} />
-                {this.state.errors.positionName && <div className={Styles.error}>{this.state.errors.positionName}</div>}
+                            <label>Company Name</label>
+                            <Input type="text" name="company" value={job.company} onChange={handleChange}
+                                   placeholder="Company"/>
+                            {errors.company && <ErrorMessage>{errors.company}</ErrorMessage>}
 
+                            <label>Description</label>
+                            <TextArea name="description" value={job.description} onChange={handleChange}
+                                      placeholder="Description"/>
+                            {errors.description && <ErrorMessage>{errors.description}</ErrorMessage>}
 
-                <div className={Styles.label3}>Start Date</div>
-                <div className={Styles.label4}>End Date</div>
+                            <label>List of Qualifications</label>
+                            <Input type="text" name="listOfQualifications" value={job.listOfQualifications} onChange={handleChange}
+                                   placeholder="List of Qualifications"/>
+                            {errors.listOfQualifications && <ErrorMessage>{errors.listOfQualifications}</ErrorMessage>}
 
-                <div className={Styles.label5}>Position ID</div>
-                <Input17 name="positionID" value={this.state.positionID} onChange={this.handleInputChange}></Input17>
-                {this.state.errors.positionID && <div className={Styles.error2}>{this.state.errors.positionID}</div>}
+                            <label>Category</label>
+                            <Input type="text" name="category" value={job.category} onChange={handleChange}
+                                   placeholder="Category"/>
+                            {errors.category && <ErrorMessage>{errors.category}</ErrorMessage>}
 
-                <div className={Styles.label6}>Start Time</div>
-                <Input18 type="time" name="startTime" value={this.state.startTime} onChange={this.handleInputChange}></Input18>
-                {this.state.errors.startTime && <div className={Styles.error3}>{this.state.errors.startTime}</div>}
+                            <label>Keywords</label>
+                            <Input type="text" name="keyWords" value={job.keyWords} onChange={handleChange}
+                                   placeholder="Keywords"/>
+                            {errors.keyWords && <ErrorMessage>{errors.keyWords}</ErrorMessage>}
 
+                            <label>Hiring Manager - First Name</label>
+                            <Input type="text" name="firstName" value={job.firstName} onChange={handleChange}
+                                   placeholder="First Name"/>
+                            {errors.firstName && <ErrorMessage>{errors.firstName}</ErrorMessage>}
 
-                <div className={Styles.label7}>End Time</div>
-                <Input19 type="time" name="endTime" value={this.state.endTime} onChange={this.handleInputChange}></Input19>
-                {this.state.errors.endTime && <div className={Styles.error4}>{this.state.errors.endTime}</div>}
+                            <label>Hiring Manager - Last Name</label>
+                            <Input type="text" name="lastName" value={job.lastName} onChange={handleChange}
+                                   placeholder="Last Name"/>
+                            {errors.lastName && <ErrorMessage>{errors.lastName}</ErrorMessage>}
 
+                            <label>Email Address</label>
+                            <Input type="email" name="email" value={job.email} onChange={handleChange}
+                                   placeholder="Email"/>
+                            {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
 
-                <div className={Styles.label8}>Payment per Hour</div>
-                <Input20 name="payPerHour" value={this.state.payPerHour} onChange={this.handleInputChange}></Input20>
-                {this.state.errors.payPerHour && <div className={Styles.error5}>{this.state.errors.payPerHour}</div>}
+                            <label>Start Date</label>
+                            <Input type="date" name="startDate" value={job.startDate} onChange={handleChange}
+                                   placeholder="Start Date"/>
+                            {errors.startDate && <ErrorMessage>{errors.startDate}</ErrorMessage>}
 
+                            <label>End Date</label>
+                            <Input type="date" name="endDate" value={job.endDate} onChange={handleChange}
+                                   placeholder="End Date"/>
+                            {errors.endDate && <ErrorMessage>{errors.endDate}</ErrorMessage>}
 
-                <div className={Styles.label9}>Description / Additional Information</div>
-                <Input21></Input21>
+                            <label>Start Time</label>
+                            <Input type="time" name="startTime" value={job.startTime} onChange={handleChange}
+                                   placeholder="Start Time"/>
+                            {errors.startTime && <ErrorMessage>{errors.startTime}</ErrorMessage>}
 
-                <div className={Styles.divider3}></div>
-                <div className={Styles.label10}>Hiring Manager Information</div>
+                            <label>End Time</label>
+                            <Input type="time" name="endTime" value={job.endTime} onChange={handleChange}
+                                   placeholder="End Time"/>
+                            {errors.endTime && <ErrorMessage>{errors.endTime}</ErrorMessage>}
 
-                <div className={Styles.label11}>First Name</div>
-                <Input22  name="firstName" value={this.state.firstName} onChange={this.handleInputChange}></Input22>
-                {this.state.errors.firstName && <div className={Styles.error6}>{this.state.errors.firstName}</div>}
+                            <label>Payment per Hour</label>
+                            <Input type="number" name="wage" value={job.wage} onChange={handleChange}
+                                   placeholder="Wage"/>
+                            {errors.wage && <ErrorMessage>{errors.wage}</ErrorMessage>}
 
-                <div className={Styles.label12}>Last Name</div>
-                <Input23  name="lastName" value={this.state.lastName} onChange={this.handleInputChange}></Input23>
-                {this.state.errors.lastName && <div className={Styles.error7}>{this.state.errors.lastName}</div>}
-
-
-                <div className={Styles.label13}>Email Address</div>
-                <Input24 name="emailAddress" value={this.state.emailAddress} onChange={this.handleInputChange}></Input24>
-                {this.state.errors.emailAddress && <div className={Styles.error8}>{this.state.errors.emailAddress}</div>}
-
-
-                <div className={Styles.label14}>Phone Number</div>
-                <Input25 name="phoneNumber" value={this.state.phoneNumber} onChange={this.handleInputChange}></Input25>
-                {this.state.errors.phoneNumber && <div className={Styles.error9}>{this.state.errors.phoneNumber}</div>}
-
-
-
-                <div className={Styles.divider4}></div>
-                <div className={Styles.label15}>Qualifications</div>
-
-
-                <div className={Styles.label16}>Category</div>
-                <Input26></Input26>
-
-                <div className={Styles.label17}>Keywords / Key Phrases Separated by Commas</div>
-                <Input27 />
-
-                <Button1 label="Add Category" />
-                <button className={Styles.button2} onClick={this.handleSubmit}>Edit</button>
-
-                <div className={Styles.card}>
-                    <Image></Image>
-                    <div className={Styles.option1}><Link to="/EmployerProfile">Contact Info</Link></div>
-                    <div className={Styles.option2}><Link to="/EmployerJobList">Job List</Link></div>
-                    <div className={Styles.option3}><Link to="/EmployerCreateJob">Create Job</Link></div>
-                    <div className={Styles.option4}><Link to="/EmployerPayment">Billing</Link></div>
-                    <div className={Styles.option5}><Link to="/EmployerDelete">Delete Account</Link></div>
-                    <div><DateInput/></div>
-                    <div><DateInput2/></div>
-                    <div><TableCatKey updateRowsCount={this.updateRowsCount}/></div>
-                    {/* <DropdownMenu></DropdownMenu>*/}
-                </div>
-            </div>
-        );
-    }
+                            <Button type="submit">Submit Job</Button>
+                        </Form>
+                    </FormWrapper>
+                </Container>
+        </div>
+    );
 }
 
-export default ECreateJob;
+export default JobForm;

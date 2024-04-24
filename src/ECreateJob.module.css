@@ -121,8 +121,8 @@
     font-weight: 500;
     line-height: 38px;
     position: absolute;
-    margin-left: 750px;
-    margin-top: 90px;
+    margin-left: 675px;
+    margin-top: -210px;
 }
 
 .label1 {
@@ -144,7 +144,7 @@
     background-color: #ffffff;
     border-radius: 2px;
     position: absolute;
-    margin-left: -13px;
+    margin-left: 180px;
     margin-top: -25px;
 }
 

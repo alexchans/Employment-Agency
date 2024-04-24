@@ -2,8 +2,8 @@ import React from 'react';
 // Modify InputField to accept onChange prop
 const styles = {
     Input: {
-        top: '175px',
-        left: '705px',
+        top: '-60px',
+        left: '1005px',
         width: '200px',
         height: '38px',
         padding: '0px 8px',
