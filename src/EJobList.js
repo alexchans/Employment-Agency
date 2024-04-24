@@ -5,6 +5,43 @@ import EmpPageTemp from './components/EmpPageTemp';
 import Popup from './EJobListComp/Popup';
 import InputField from './EJobListComp/InputField';
 import { Link } from "react-router-dom";
+import styled from 'styled-components';
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -180px; /* Add margin to the top of the container */
+    position: relative;
+`;
+
+const StyledForm = styled.form`
+    width: 60%;
+    margin-bottom: 100px; /* Add margin to the bottom of the form */
+`;
+
+const ListContainer = styled.div`
+  width: 60%;
+  margin-top: -180px; /* Move the list slightly upward */
+`;
+
+const StyledList = styled.ol`
+  list-style-type: none;
+  padding: 0;
+`;
+
+const ListItem = styled.li`
+  cursor: pointer;
+  margin-bottom: 20px;
+`;
+
+const JobTitle = styled.h2`
+  margin-bottom: 5px;
+`;
+
+const JobDescription = styled.p`
+  margin-bottom: 10px;
+`;
 
 function EJobList() {
     const [jobs, setJobs] = useState([]);
@@ -33,9 +70,13 @@ function EJobList() {
     }, []);
 
     useEffect(() => {
-        // Filter jobs based on search input (by job ID)
-        const results = jobs.filter(job => job.id.toString().startsWith(searchTerm));
-        setFilteredJobs(results);
+        const delaySearch = setTimeout(() => {
+            // Filter jobs based on search input (by job ID)
+            const results = jobs.filter(job => job.id.toString().startsWith(searchTerm));
+            setFilteredJobs(results);
+        }, 300); // Debounce time in milliseconds
+
+        return () => clearTimeout(delaySearch);
     }, [searchTerm, jobs]);
 
     const handleJobSelect = (job) => {
@@ -46,45 +87,55 @@ function EJobList() {
         setSelectedJob(null);
     };
 
+    const handleClearSearch = () => {
+        setSearchTerm('');
+    };
+
     return (
         <div>
             <EmpPageTemp/>
-            <h3>Welcome, {username || 'Guest'}!</h3>  {/* Display the username or 'Guest' if not found */}
-            <div className='flex'>
-
-                <ul>
-                    <li><Link to="/EmployerProfile">Contact Info</Link></li>
-                    <li><Link to="/EmployerCreateJob">Create Job</Link></li>
-                    <li><Link to="/EmployerUpdateJob">Update Job</Link></li>
-                    <li><Link to="/EmployerJobList">Job List</Link></li>
-                    <li><Link to="/EmployerPayment">Billing</Link></li>
-                    <li><Link to="/EmployerChangePass">Change Password</Link></li>
-                    <li><Link to="/EmployerDelete">Delete Account</Link></li>
-                </ul>
-                <form style={{paddingRight: '40vw'}}>
-                    <InputField text={searchTerm} onChange={e => setSearchTerm(e.target.value)} placeholder="Search by Job ID"/>
-                    <div><h1>List of Jobs</h1></div>
+            <h3>Welcome, {username || 'Guest'}!</h3>
+            <ul>
+                <li><Link to="/EmployerProfile">Contact Info</Link></li>
+                <li><Link to="/EmployerCreateJob">Create Job</Link></li>
+                <li><Link to="/EmployerUpdateJob">Update Job</Link></li>
+                <li><Link to="/EmployerJobList">Job List</Link></li>
+                <li><Link to="/EmployerPayment">Billing</Link></li>
+                <li><Link to="/EmployerChangePass">Change Password</Link></li>
+                <li><Link to="/EmployerDelete">Delete Account</Link></li>
+            </ul>
+            <Container>
+                <StyledForm>
+                    <InputField
+                        text={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        placeholder="Search by Job ID"
+                    />
+                    {/* <button type="button" onClick={handleClearSearch}>Clear</button>*/}
+                </StyledForm>
+                <ListContainer>
+                    <h1>List of Jobs</h1>
                     <hr className="solid"/>
                     {loading ? (
                         <p>Loading jobs...</p>
                     ) : error ? (
                         <p>{error}</p>
                     ) : filteredJobs.length > 0 ? (
-                        <ol>
+                        <StyledList>
                             {filteredJobs.map(job => (
-                                <li key={job.id} onClick={() => handleJobSelect(job)} style={{cursor: 'pointer'}}>
-                                    <h2>{job.position} at {job.company}</h2>
-                                    <p>{job.description}</p>
+                                <ListItem key={job.id} onClick={() => handleJobSelect(job)}>
+                                    <JobTitle>{job.position} at {job.company}</JobTitle>
+                                    <JobDescription>{job.description}</JobDescription>
                                     <hr/>
-                                </li>
+                                </ListItem>
                             ))}
-                        </ol>
+                        </StyledList>
                     ) : (
                         <p>No jobs found.</p>
                     )}
-                </form>
-            </div>
-            {selectedJob && <Popup isOpen={!!selectedJob} onClose={handleClose} jobDetails={selectedJob} />}
+                </ListContainer>
+                {selectedJob && <Popup isOpen={!!selectedJob} onClose={handleClose} jobDetails={selectedJob}/>}
+            </Container>
         </div>
     );
 }
