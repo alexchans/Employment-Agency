@@ -29,6 +29,13 @@ function StaffDelete() {
     const handleApprove = async (username) => {
         await axios.put(`http://172.24.240.1:8080/api/professionals/deletion/approve/${username}`);
         await axios.put(`http://172.24.240.1:8080/api/employer-deletion-requests/approve/${username}`);
+        window.location.reload();
+    };
+
+    const handleDeny = async (username) => {
+        await axios.put(`http://172.24.240.1:8080/api/employer-deletion-requests/deleteDeletionRequest/${username}`);
+        await axios.put(`http://172.24.240.1:8080/api/professionals/deleteDeletionRequest/${username}`);
+        window.location.reload();
     };
 
     const handleOpenDialog = async (user) => {
@@ -65,7 +72,7 @@ function StaffDelete() {
                                 <li style={{ flex: 1, cursor: 'pointer', marginRight: '10px' }} onClick={() => handleOpenDialog(user)}>{user}</li>
                                 <div>
                                     <Button onClick={() => handleApprove(user)} variant="contained" size='small'>Approve</Button>
-                                    <Button variant="contained" size='small' style={{ backgroundColor: 'red', marginLeft: '5px' }}>Deny</Button>
+                                    <Button onClick={() => handleDeny(user)} variant="contained" size='small' style={{ backgroundColor: 'red', marginLeft: '5px' }}>Deny</Button>
                                 </div>
                             </div>
                         ))}
