@@ -1,147 +1,116 @@
-import React from 'react';
-import Styles from './ESignIn.module.css'
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 import logo from './img/logo.png';
+import Styles from './ESignIn.module.css';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
 
-class ESignIn extends React.Component {
-    state = {
-    };
+function ESignIn() {
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+        streetAddress: '',
+        zipcode: '',
+        city: '',
+        state: '',
+        companyName: '',
+        username: '',
+    });
 
-    handleInputChange = (event) => {
+    const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
+
+    const handleInputChange = (event) => {
         const { name, value } = event.target;
-        this.setState({
-            [name]: value,
-            [`${name}Error`]: '',
-        });
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+        setErrors(prevErrors => ({
+            ...prevErrors,
+            [`${name}Error`]: ''
+        }));
     };
 
-    handleSubmit = (event) => {
+    const validateField = (field, value) => {
+        if (!value) {
+            return `${field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1')} cannot be empty.`;
+        }
+        if (field === 'username' && !/^[A-Za-z][A-Za-z0-9]{7,}$/.test(value)) {
+            return 'Username must be at least 8 characters long and start with a letter.';
+        }
+        if (field === 'email' && !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+            return 'Invalid email format.';
+        }
+        if (field === 'phoneNumber' && !/^(\+\d{1,2}\s?)?1?\-?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test(value)) {
+            return 'Invalid phone number format.';
+        }
+        return '';
+    };
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const { firstname, lastname, email, phonenumber, SA, zipcode, city, state, company, username } = this.state;
-        const fields = { firstname, lastname, email, phonenumber, SA, zipcode, city, state, company, username };
-        Object.keys(fields).forEach(field => {
-            if (!fields[field]) {
-                this.setState({ [`${field}Error`]: `${field.charAt(0).toUpperCase() + field.slice(1)} cannot be empty.` });
+        let isValid = true;
+        const newErrors = {};
+
+        Object.keys(formData).forEach(field => {
+            const error = validateField(field, formData[field]);
+            if (error) {
+                newErrors[`${field}Error`] = error;
+                isValid = false;
             }
         });
-        if (username && !/^[A-Za-z][A-Za-z0-9]{7,}$/.test(username)) {
-            this.setState({ usernameError: 'Username must be at least 8 characters long and start with a letter.' });
+
+        setErrors(newErrors);
+
+        if (isValid) {
+            try {
+                const response = await axios.post('http://localhost:8080/api/employerRequests/create', formData);
+                console.log(response.data);
+                alert('Employer registered successfully!');
+                navigate('/Login');  // Assuming you want to navigate to some route after successful registration
+            } catch (error) {
+                console.error('There was an error!', error.response || error);
+                alert('Failed to register employer. Please check your input and try again.');
+            }
         }
-        if (email && !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-            this.setState({ emailError: 'Invalid email format.' });
-        }
-        if (phonenumber && !/^(\+\d{1,2}\s?)?1?\-?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test(phonenumber)) {
-            this.setState({ phonenumberError: 'Invalid phone number format.' });
-        }
-        return;
     };
-    render() {
-        const { firstnameError, lastnameError, emailError, phonenumberError, SAError, zipcodeError, cityError, stateError, companyError, usernameError } = this.state;
-        return (
-            <div>
-                <img src={logo} alt="Logo" className="logo" />
-                <h1 className='center'>Employer Sign Up</h1>
-                <hr style={{ width: '60%' }} />
-                <form onSubmit={this.handleSubmit}>
-                    <div className={Styles.grid}>
-                        <div>
-                            <label className="label" htmlFor="firstname">First Name:</label>
-                            <div>
-                                <input type="text" id="firstname" name="firstname" value={this.state.firstname}
-                                    onChange={this.handleInputChange} />
-                            </div>
-                            <p style={{ color: "red" }}>{firstnameError}</p>
-                        </div>
-                        <div>
-                            <label className="label" htmlFor="lastname">Last Name:</label>
-                            <div>
-                                <input type="text" id="lastname" name="lastname" value={this.state.lastname}
-                                    onChange={this.handleInputChange} />
-                            </div>
-                            <p style={{ color: "red" }}>{lastnameError}</p>
-                        </div>
-                        <div>
-                            <label className="label" htmlFor="email">Email:</label>
-                            <div>
-                                <input type="text" id="email" name="email" value={this.state.email}
-                                    onChange={this.handleInputChange} />
-                            </div>
-                            <p style={{ color: "red" }}>{emailError}</p>
-                        </div>
-                        <div>
-                            <label className="label" htmlFor="phonenumber">Phone Number:</label>
-                            <div>
-                                <input type="text" id="phonenumber" name="phonenumber" value={this.state.phonenumber}
-                                    onChange={this.handleInputChange} />
-                            </div>
-                            <p style={{ color: "red" }}>{phonenumberError}</p>
-                        </div>
-                        <div>
-                            <label className="label" htmlFor="SA">Street Address:</label>
-                            <div>
-                                <input type="text" id="SA" name="SA" value={this.state.SA}
-                                    onChange={this.handleInputChange} />
-                            </div>
-                            <p style={{ color: "red" }}>{SAError}</p>
-                        </div>
-                        <div>
-                            <label className="label" htmlFor="zipcode">ZipCode:</label>
-                            <div>
-                                <input type="text" id="zipcode" name="zipcode" value={this.state.zipcode}
-                                    onChange={this.handleInputChange} />
-                            </div>
-                            <p style={{ color: "red" }}>{zipcodeError}</p>
-                        </div>
-                        <div>
-                            <label className="label" htmlFor="city">City:</label>
-                            <div>
-                                <input type="text" id="city" name="city" value={this.state.city}
-                                    onChange={this.handleInputChange} />
-                            </div>
-                            <p style={{ color: "red" }}>{cityError}</p>
-                        </div>
-                        <div>
-                            <label className="label" htmlFor="state">State:</label>
-                            <div>
-                                <input type="text" id="state" name="state" value={this.state.state}
-                                    onChange={this.handleInputChange} />
-                            </div>
-                            <p style={{ color: "red" }}>{stateError}</p>
-                        </div>
-                        <div>
-                            <label className="label" htmlFor="company">Company:</label>
-                            <div>
-                                <input type="text" id="company" name="company" value={this.state.company}
-                                    onChange={this.handleInputChange} />
-                            </div>
-                            <p style={{ color: "red" }}>{companyError}</p>
-                        </div>
-                        <div>
-                            <label className="label" htmlFor="username">Preferred Username:</label>
+
+    return (
+        <div>
+            <img src={logo} alt="Logo" className="logo" />
+            <h1 className='center'>Employer Sign Up</h1>
+            <hr style={{ width: '60%' }} />
+            <form onSubmit={handleSubmit}>
+                <div className={Styles.grid}>
+                    {['firstName', 'lastName', 'email', 'phoneNumber', 'streetAddress', 'zipcode', 'city', 'state', 'companyName', 'username'].map((field) => (
+                        <div key={field}>
+                            <label className="label" htmlFor={field}>{field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1')}:</label>
                             <div>
                                 <input
                                     type="text"
-                                    id="username"
-                                    name="username"
-                                    value={this.state.username}
-                                    onChange={this.handleInputChange}
+                                    id={field}
+                                    name={field}
+                                    value={formData[field]}
+                                    onChange={handleInputChange}
                                 />
                             </div>
-                            <p style={{ color: "red" }}>{usernameError}</p>
+                            <p style={{ color: "red" }}>{errors[`${field}Error`]}</p>
                         </div>
-                    </div>
-                    <div className={Styles.button}>
-                        <Button type="submit" variant="contained" size='large'>Sign Up</Button>
-                    </div>
-                </form>
-                <hr style={{ width: '30%' }} />
-                <div className='center'>
-                    <Link to="/Login">Already have an account? Log In</Link>
+                    ))}
                 </div>
+                <div className={Styles.button}>
+                    <Button type="submit" variant="contained" size='large'>Sign Up</Button>
+                </div>
+            </form>
+            <hr style={{ width: '30%' }} />
+            <div className='center'>
+                <Link to="/Login">Already have an account? Log In</Link>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default ESignIn;
