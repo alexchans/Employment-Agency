@@ -11,7 +11,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: -180px; /* Add margin to the top of the container */
+    margin-top: 20px;  /* Add margin to the top of the container */
     position: relative;
 `;
 
@@ -22,7 +22,7 @@ const StyledForm = styled.form`
 
 const ListContainer = styled.div`
   width: 60%;
-  margin-top: -180px; /* Move the list slightly upward */
+  margin-top: -350px; /* Move the list slightly upward */
 `;
 
 const StyledList = styled.ol`
@@ -87,14 +87,14 @@ function EJobList() {
         setSelectedJob(null);
     };
 
-    const handleClearSearch = () => {
+  /*  const handleClearSearch = () => {
         setSearchTerm('');
-    };
+    };*/
 
     return (
         <div>
             <EmpPageTemp/>
-            <h3>Welcome, {username || 'Guest'}!</h3>
+            <h3>User: {username || 'Guest'}!</h3>
             <ul>
                 <li><Link to="/EmployerProfile">Contact Info</Link></li>
                 <li><Link to="/EmployerCreateJob">Create Job</Link></li>
@@ -105,7 +105,7 @@ function EJobList() {
                 <li><Link to="/EmployerDelete">Delete Account</Link></li>
             </ul>
             <Container>
-                <StyledForm>
+            <StyledForm>
                     <InputField
                         text={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}

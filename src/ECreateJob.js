@@ -166,7 +166,7 @@ function JobForm() {
                 <li><Link to="/EmployerDelete">Delete Account</Link></li>
             </ul>
                 <div className={Styles.subheader}>Create Job</div>
-                <div className={Styles.divider2}></div>
+                {/*<div className={Styles.divider2}></div>*/}
                 <Container>
                     <FormWrapper>
                         <ToastContainer/>
