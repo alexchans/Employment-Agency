@@ -61,7 +61,7 @@ function StaffAddStaff() {
             return;
         }
 
-        const response = await axios.post(`http://172.24.240.1:8080/api/staff/create`, { username: fields.username, email: fields.email, firstName: fields.first_name, lastName: fields.last_name, phoneNumber: fields.phone_number });
+        const response = await axios.post(`http://localhost:8080/api/staff/create`, { username: fields.username, email: fields.email, firstName: fields.first_name, lastName: fields.last_name, phoneNumber: fields.phone_number });
         newErrors.email = "new staff " + fields.username + " created";
         setErrors(newErrors);
         return;

@@ -15,9 +15,9 @@ function StaffDelete() {
 
     useEffect(() => {
         const fetchUsernames = async () => {
-            const response = await axios.get(`http://172.24.240.1:8080/api/employer-deletion-requests/all`);
+            const response = await axios.get(`http://localhost:8080/api/employer-deletion-requests/all`);
             const employerUsernames = response.data.map(request => request.username);
-            const response2 = await axios.get(`http://172.24.240.1:8080/api/professionals/deletion-requests/all`);
+            const response2 = await axios.get(`http://localhost:8080/api/professionals/deletion-requests/all`);
             const professionalUsernames = response2.data.map(request => request.username);
             const usernames = [...employerUsernames, ...professionalUsernames];
             setUsernames(usernames);
@@ -27,20 +27,20 @@ function StaffDelete() {
     }, []);
 
     const handleApprove = async (username) => {
-        await axios.put(`http://172.24.240.1:8080/api/professionals/deletion/approve/${username}`);
-        await axios.put(`http://172.24.240.1:8080/api/employer-deletion-requests/approve/${username}`);
+        await axios.put(`http://localhost:8080/api/professionals/deletion/approve/${username}`);
+        await axios.put(`http://localhost:8080/api/employer-deletion-requests/approve/${username}`);
         window.location.reload();
     };
 
     const handleDeny = async (username) => {
-        await axios.put(`http://172.24.240.1:8080/api/employer-deletion-requests/deleteDeletionRequest/${username}`);
-        await axios.put(`http://172.24.240.1:8080/api/professionals/deleteDeletionRequest/${username}`);
+        await axios.put(`http://localhost:8080/api/employer-deletion-requests/deleteDeletionRequest/${username}`);
+        await axios.put(`http://localhost:8080/api/professionals/deleteDeletionRequest/${username}`);
         window.location.reload();
     };
 
     const handleOpenDialog = async (user) => {
         setOpenDialog(true);
-        const response = await axios.get(`http://172.24.240.1:8080/api/payments/${user}/balance`);
+        const response = await axios.get(`http://localhost:8080/api/payments/${user}/balance`);
         setbalance(response.data);
     };
 

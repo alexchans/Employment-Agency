@@ -14,4 +14,18 @@
   td {
     border: 1px solid white;
   }
+
+  .center {
+    text-align: center;
+    margin-top: 0; /* Removes the top margin */
+    padding-top: 0; /* Ensures no padding is adding extra space */
+}
+
+.form {
+    padding-right: 20vw;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
   

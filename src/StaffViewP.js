@@ -16,7 +16,7 @@ function StaffViewP() {
 
     useEffect(() => {
         const fetchUsernames = async () => {
-            const response = await axios.get(`http://172.24.240.1:8080/api/professionals`);
+            const response = await axios.get(`http://localhost:8080/api/professionals`);
             const userDetailsMap = {};
             const usernamesList = response.data.map(user => {
                 userDetailsMap[user.username] = user;

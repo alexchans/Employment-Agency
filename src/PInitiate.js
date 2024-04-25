@@ -1,55 +1,73 @@
-import React from 'react';
-import logo from './img/logo.png';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 import Button from '@mui/material/Button';
 import ProPageTemp from './components/ProPageTemp';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 
+function PInitiate() {
+    const username = "briggs2562";  // Hardcoded for demonstration, consider dynamic setting
+    const [openDialog, setOpenDialog] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [jobs, setJobs] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [initiated, setInitiated] = useState(false);
+    const navigate = useNavigate();
 
+    // Initial fetch to load all jobs
+    useEffect(() => {
+        axios.get('http://localhost:8080/api/job/all')
+            .then(response => {
+                setJobs(response.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error('Error fetching all jobs:', error);
+                setError('Failed to fetch all jobs');
+                setLoading(false);
+            });
+    }, []);
 
-class PInitiate extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            openDialog: false,
-            selectedUser: null
-        };
-    }
-
-    handleOpenDialog = (user) => {
-        this.setState({
-            openDialog: true,
-            selectedUser: user
-        });
+    // Function to fetch matched jobs based on username
+    const fetchMatchedJobs = () => {
+        setLoading(true);
+        axios.get(`http://localhost:8080/api/matchings/${username}`)
+            .then(response => {
+                setJobs(response.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error('Error fetching matched jobs:', error);
+                setError('Failed to fetch matched jobs');
+                setLoading(false);
+            });
     };
 
-    handleCloseDialog = () => {
-        this.setState({
-            openDialog: false,
-            selectedUser: null
-        });
-    }
+    const initiateMatching = () => {
+        setInitiated(true);
+        fetchMatchedJobs(); // Immediately fetch matched jobs when initiated
+    };
 
-    render() {
-        return (
-            <div>
-                <ProPageTemp />
-                <div className='flex'>
-                    <ul>
-                        <li><Link to="/ProfessionalUpdate">Update Info</Link></li>
-                        <li><Link to="/ProfessionalBrowse">Browse Job</Link></li>
-                        <li><Link to="/ProfessionalInitiate">Initiate Matching</Link></li>
-                        <li><Link to="/ProfessionalRemove">Remove</Link></li>
-                        <li><Link to="/ProfessionalPayment">Payment</Link></li>
-                        <li><Link to="/ProfessionalPassword">Change Password</Link></li>
-                    </ul>
-                    <div className='center'>
-                        <Button variant="contained" size='medium' color='success'>Initiate Matching</Button>
-                    </div>
-                    <div style={{paddingRight: '50vw'}}>
+    return (
+        <div>
+            <ProPageTemp />
+            <div className='flex'>
+                <ul>
+                    <li><Link to="/ProfessionalUpdate">Update Info</Link></li>
+                    <li><Link to="/ProfessionalBrowse">Browse Job</Link></li>
+                    <li><Link to="/ProfessionalInitiate">Initiate Matching</Link></li>
+                    <li><Link to="/ProfessionalRemove">Remove</Link></li>
+                    <li><Link to="/ProfessionalPayment">Payment</Link></li>
+                    <li><Link to="/ProfessionalPassword">Change Password</Link></li>
+                </ul>
+                <div className='center'>
+                    <Button onClick={initiateMatching} variant="contained" color='success'>
+                        {initiated ? 'Matching Initiated' : 'Initiate Matching'}
+                    </Button>
+                </div>
+                {/* Jobs table */}
+                <div style={{ paddingRight: '50vw' }}>
+                    {loading ? <p>Loading...</p> : error ? <p>{error}</p> : (
                         <table>
                             <thead>
                                 <tr>
@@ -59,73 +77,20 @@ class PInitiate extends React.Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Software Engineer</td>
-                                    <td>Google</td>
-                                    <td><Link to="/ProfessionalInfo">More Info</Link></td>
-                                </tr>
-                                <tr>
-                                    <td>UX Engineer</td>
-                                    <td>Netflix</td>
-                                    <td><a onClick={()=> this.handleOpenDialog('UX')}>More Info</a></td>
-                                </tr>
-                                <tr>
-                                    <td>UX Engineer</td>
-                                    <td>Netflix</td>
-                                    <td><a href="/information-page">More Info</a></td>
-                                </tr>
-                                <tr>
-                                    <td>UX Engineer</td>
-                                    <td>Netflix</td>
-                                    <td><a href="/information-page">More Info</a></td>
-                                </tr>
-                                <tr>
-                                    <td>UX Engineer</td>
-                                    <td>Netflix</td>
-                                    <td><a href="/information-page">More Info</a></td>
-                                </tr>
+                                {jobs.map((job) => (
+                                    <tr key={job.id}>
+                                        <td>{job.position}</td>
+                                        <td>{job.company}</td>
+                                        <td><Button onClick={() => navigate('/ProfessionalInfo', { state: { job } })}>More Info</Button></td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
-                    </div>
+                    )}
                 </div>
-                <Dialog open={this.state.openDialog} onClose={this.handleCloseDialog}>
-                    <DialogTitle>UX Engineer</DialogTitle>
-                    <DialogContent>
-                        <p>Company: Netflix</p>
-                        <p>ID: 43994399</p>
-                        <p>Position: UX Engineer</p>
-                        <p>Person: Michael Jordan</p>
-                        <p>Phone: 111-111-1111</p>
-                        <p>Email: mjordan@smu.edu</p>
-                        <p>Date: 2/1/2024-2/10/2024</p>
-                        <p>Hours: 10am-3pm</p>
-                        <p>Salary: $100/hour</p>
-                        <p>Qualification:</p>
-                        <table>
-                        <tr>
-                            <th>Category</th>
-                            <th>Key words/phrases</th>
-                        </tr>
-                        <tr>
-                            <td>Languages</td>
-                            <td>Java,C++</td>
-                        </tr>
-                        <tr>
-                            <td>Previous Employment</td>
-                            <td>Software Engineer</td>
-                        </tr>
-                    </table>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.handleCloseDialog} color="primary">Close</Button>
-                    </DialogActions>
-                        
-                </Dialog>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default PInitiate;
-
-

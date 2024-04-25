@@ -45,7 +45,7 @@ function StaffUpdateInfo() {
         if (!isValid) {
             return;
         }
-        const response = await axios.put(`http://172.24.240.1:8080/api/staff/update/${username}/${phonenumber}/${email}`);
+        const response = await axios.put(`http://localhost:8080/api/staff/update/${username}/${phonenumber}/${email}`);
         setEmailError('Password and Email Updated Successfully');
         return;
     };
