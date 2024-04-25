@@ -16,7 +16,7 @@ function StaffRER() {
 
     useEffect(() => {
         const fetchUsernames = async () => {
-            const response = await axios.get(`http://172.24.240.1:8080/api/professionalRequests/all`);
+            const response = await axios.get(`http://localhost:8080/api/professionalRequests/all`);
             const userDetailsMap = {};
             const usernamesList = response.data.map(user => {
                 userDetailsMap[user.username] = user;
@@ -42,12 +42,12 @@ function StaffRER() {
     };
 
     const handleApprove = async (username) => {
-        await axios.post(`http://172.24.240.1:8080/api/professionals/create/${username}`);
+        await axios.post(`http://localhost:8080/api/professionals/create/${username}`);
         window.location.reload();
     };
 
     const handleDeny = async (username) => {
-        await axios.put(`http://172.24.240.1:8080/api/professionalRequests/delete/${username}`);
+        await axios.put(`http://localhost:8080/api/professionalRequests/delete/${username}`);
         window.location.reload();
     };
 

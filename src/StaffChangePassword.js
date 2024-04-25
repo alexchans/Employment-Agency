@@ -69,7 +69,7 @@ function StaffChangePassword() {
 
         if (!isValid) return;
 
-        const response = await axios.put(`http://172.24.240.1:8080/api/login/update-password/${newPassword}`, {
+        const response = await axios.put(`http://localhost:8080/api/login/update-password/${newPassword}`, {
             username,
             password: currentPassword,
             userType

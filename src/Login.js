@@ -41,23 +41,23 @@ function Login() {
         if (!password) {
             setState(prevState => ({ ...prevState, passwordError: 'Password cannot be empty.' }));
             hasError = true;
-        } else if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(password)) {
-            setState(prevState => ({ ...prevState, passwordError: 'Password must be at least 8 characters long and include at least one letter, one number, and one special character.' }));
-            hasError = true;
-        }
+         } //else if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(password)) {
+        //     setState(prevState => ({ ...prevState, passwordError: 'Password must be at least 8 characters long and include at least one letter, one number, and one special character.' }));
+        //     hasError = true;
+        // }
 
         if (hasError) return;
 
         try {
-            const response = await axios.post(`http://172.24.240.1:8080/api/login/verify`, { username, password });
+            const response = await axios.post(`http://localhost:8080/api/login/verify`, { username, password });
             if (!response.data) {
                 setState(prevState => ({ ...prevState, passwordError: 'Username or Password Wrong' }));
                 return;
             }
             Cookies.set('username', username, { expires: 7 });
-            const isStaff = await axios.get(`http://172.24.240.1:8080/api/staff/exists/${username}`);
-            const isEmployer = await axios.get(`http://172.24.240.1:8080/api/employer/exists/${username}`);
-            const isProfessional = await axios.get(`http://172.24.240.1:8080/api/professionals/exists/${username}`);
+            const isStaff = await axios.get(`http://localhost:8080/api/staff/exists/${username}`);
+            const isEmployer = await axios.get(`http://localhost:8080/api/employer/exists/${username}`);
+            const isProfessional = await axios.get(`http://localhost:8080/api/professionals/exists/${username}`);
 
             if (isStaff.data) {
                 navigate('/StaffUpdateInfo');
