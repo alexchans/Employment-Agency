@@ -26,6 +26,7 @@ import EPay from './EPay'
 import EJobList from './EJobList'
 import EChangePass from "./EChangePass";
 import PPassword from "./PPassword";
+import EUpdateProfile from "./EUpdateProfile";
 
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
         <Route path="/EmployerChangePass" element={<EChangePass />} />
         <Route path="/EmployerPayment" element={<EPay />} />
         <Route path="/EmployerJobList" element={<EJobList />} />
+        <Route path="/EmployerUpdateProfile" element={<EUpdateProfile />} />
         <Route path="*" element={<Navigate to="/Login" replace />} />
       </Routes>
     </Router>

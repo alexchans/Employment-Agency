@@ -84,7 +84,7 @@ function EmployerProfile() {
                 const response = await axios.get(`http://localhost:8080/api/employer/profile/${username}`);
                 if (isMounted) { // Only update state and show toast if the component is mounted
                     setEmployer(response.data);
-                    toast.success('Profile loaded successfully!');
+                    //toast.success('Profile loaded successfully!');
                 }
             } catch (error) {
                 console.error('Failed to fetch profile:', error);
@@ -128,7 +128,7 @@ function EmployerProfile() {
                             <InfoRow><Label>Address:</Label>
                                 <Data>{employer.streetAddress}, {employer.city}, {employer.state} {employer.zipcode}</Data></InfoRow>
                         </ProfileCard>
-                        <Link to="/path-to-update-profile"> {/* Replace with your actual path */}
+                        <Link to="/EmployerUpdateProfile">
                             <UpdateButton>Update Profile</UpdateButton>
                         </Link>
                     </>

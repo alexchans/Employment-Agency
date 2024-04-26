@@ -22,7 +22,7 @@ const StyledForm = styled.form`
 
 const ListContainer = styled.div`
   width: 60%;
-  margin-top: -350px; /* Move the list slightly upward */
+  margin-top: -330px; /* Move the list slightly upward */
 `;
 
 const StyledList = styled.ol`
@@ -94,7 +94,7 @@ function EJobList() {
     return (
         <div>
             <EmpPageTemp/>
-            <h3>User: {username || 'Guest'}!</h3>
+            {/*<h3>User: {username || 'Guest'}!</h3>*/}
             <ul>
                 <li><Link to="/EmployerProfile">Contact Info</Link></li>
                 <li><Link to="/EmployerCreateJob">Create Job</Link></li>
