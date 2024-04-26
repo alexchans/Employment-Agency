@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import ProPageTemp from './components/ProPageTemp';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 
 const PPayment = () => {
-    const username = "albert4684"; 
+    const username = Cookies.get('username'); 
     const [amount, setAmount] = useState('');
     const [balance, setBalance] = useState(null);
     const [showWarning, setShowWarning] = useState(false);
@@ -81,7 +82,7 @@ const PPayment = () => {
         } else {
             // Create the payload
             const paymentData = {
-                paymentAmount: amountNumber // Assuming BigDecimal is available in your environment
+                paymentAmount: amountNumber 
             };
 
             try {
@@ -97,7 +98,7 @@ const PPayment = () => {
                     throw new Error('Network response was not ok.');
                 }
 
-                // Here you might want to navigate to another page or fetch the new balance
+                
                 console.log("Payment processed successfully");
                 updateBalance();
                 updateLastPaymentDate();
@@ -127,14 +128,14 @@ const PPayment = () => {
                         <label className="label" htmlFor="date">Last Payment Date:</label>
                     </div>
                     <div>
-                        <label className="label" htmlFor="exact date">{lastPaymentDate}</label> {/* This should be dynamic based on user data */}
+                        <label className="label" htmlFor="exact date">{lastPaymentDate}</label>
                     </div>
                     <div>
                         <label className="label" htmlFor="balance">Available Balance:</label>
                     </div>
                     <div>
                         {balance !== null ? (
-                            <label className="label" htmlFor="exact balance">{balance}</label> // Assuming balance is a number
+                            <label className="label" htmlFor="exact balance">{balance}</label> 
                         ) : (
                             <label className="label" htmlFor="exact balance">Loading balance...</label>
                         )}

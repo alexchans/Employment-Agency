@@ -3,9 +3,10 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import ProPageTemp from './components/ProPageTemp';
+import Cookies from 'js-cookie';
 
 function PInitiate() {
-    const username = "briggs2562";  // Hardcoded for demonstration, consider dynamic setting
+    const username = Cookies.get('username');
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const [jobs, setJobs] = useState([]);

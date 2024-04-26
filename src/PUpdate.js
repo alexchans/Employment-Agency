@@ -5,6 +5,7 @@ import logo from './img/logo.png';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import ProPageTemp from './components/ProPageTemp';
+import Cookies from 'js-cookie';
 
 const PUpdate = () => {
     const [state, setState] = useState({
@@ -16,7 +17,7 @@ const PUpdate = () => {
         zipcode: '',
         city: '',
         state: '',
-        username: '',
+        username: Cookies.get('username'),
         institution: '',
         degree: '',
         graduationDate: '',
@@ -30,7 +31,6 @@ const PUpdate = () => {
         zipcodeError: '',
         cityError: '',
         stateError: '',
-        usernameError: '',
         institutionError: '',
         degreeError: '',
         graduationDateError: '',
@@ -68,7 +68,7 @@ const PUpdate = () => {
                 ...errors
             }));
         } else {
-            // Construct the object expected by your backend
+            
             const updateRequest = {
                 firstName: state.firstName,
                 lastName: state.lastName,
@@ -78,7 +78,7 @@ const PUpdate = () => {
                 zipcode: state.zipcode,
                 city: state.city,
                 state: state.state,
-                username: state.username,
+                username : state.username,
                 institution: state.institution,
                 degree: state.degree,
                 graduationDate: state.graduationDate,
@@ -90,11 +90,11 @@ const PUpdate = () => {
                 const response = await axios.put('http://localhost:8080/api/professionals/update', updateRequest);
                 console.log('Server response:', response.data);
                 alert('Update successfully!');
-                // Handle the response appropriately
+                
             } catch (error) {
                 console.error('Error submitting form:', error);
                 alert('Update has failed');
-                // Optionally update the state to show the error message
+                
             }
         }
     };
@@ -180,14 +180,6 @@ const PUpdate = () => {
                                 onChange={handleInputChange} />
                         </div>
                         <p style={{ color: "red" }}>{state.stateError}</p>
-                    </div>
-                    <div>
-                        <label className="label" htmlFor="username">Preferred Username:</label>
-                        <div>
-                            <input type="text" id="username" name="username" value={state.username}
-                                onChange={handleInputChange} />
-                        </div>
-                        <p style={{ color: "red" }}>{state.usernameError}</p>
                     </div>
                     <div>
                         <label className="label" htmlFor="institution">Institution:</label>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import ProPageTemp from './components/ProPageTemp';
@@ -6,26 +6,23 @@ import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 function PRemove() {
-    const [username, setUsername] = useState('');
     const [usernameError, setUsernameError] = useState('');
+    const username = Cookies.get('username'); // Automatically retrieve the username from cookies
 
-    const handleInputChange = (event) => {
-        setUsername(event.target.value);
-        setUsernameError('');
-    };
+    useEffect(() => {
+        if (!username) {
+            setUsernameError('Username not found in cookies.');
+        }
+    }, [username]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (!username) {
             setUsernameError('Username cannot be empty.');
             return;
-        } else if (!/^[A-Za-z][A-Za-z0-9]{7,}$/.test(username)) {
-            setUsernameError('Username must be at least 8 characters long and start with a letter.');
-            return;
         }
 
         try {
-            // Note the use of backticks for string interpolation
             const response = await axios.post(`http://localhost:8080/api/professionals/deletion-requests/${username}`);
             console.log(response.data);
             alert('Deletion request submitted successfully!');
@@ -49,11 +46,7 @@ function PRemove() {
                 </ul>
                 <div style={{ paddingRight: '70vw' }}>
                     <h2>Remove Account</h2>
-                    <label className="label" htmlFor="username">Username:</label>
-                    <div>
-                        <input type="text" id="username" name="username" value={username} onChange={handleInputChange} />
-                        {usernameError && <p style={{ color: 'red' }}>{usernameError}</p>}
-                    </div>
+                    {usernameError && <p style={{ color: 'red' }}>{usernameError}</p>}
                     <div style={{ paddingTop: '3vh' }}>
                         <Button variant="contained" size='medium' color='warning' onClick={handleSubmit}>Remove</Button>
                     </div>

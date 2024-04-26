@@ -68,7 +68,7 @@ function Login() {
                 return;
             }
             if (isProfessional.data) {
-                navigate('/ProfessionalInfo');
+                navigate('/ProfessionalInitiate');
                 return;
             }
         } catch (error) {

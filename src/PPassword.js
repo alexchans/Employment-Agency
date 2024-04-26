@@ -42,10 +42,10 @@ function PPassword() {
         if (!currentPassword) {
             setCurrentPasswordError('Current Password cannot be empty.');
             isValid = false;
-        } else if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(currentPassword)) {
-            setCurrentPasswordError('Password must be at least 8 characters long and include at least one letter and one number.');
-            isValid = false;
-        }
+        } //else if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(currentPassword)) {
+        //     setCurrentPasswordError('Password must be at least 8 characters long and include at least one letter and one number.');
+        //     isValid = false;
+        // }
 
         if (!newPassword) {
             setNewPasswordError('New Password cannot be empty.');

@@ -20,7 +20,8 @@ const PSignIn = () => {
         degree: '',
         graduationDate: '',
         category: '',
-        keys: '',
+        listOfKeywords: '',
+        matchingStatus: 'pending',
         firstNameError: '',
         lastNameError: '',
         emailError: '',
@@ -34,7 +35,8 @@ const PSignIn = () => {
         degreeError: '',
         graduationDateError: '',
         categoryError: '',
-        keysError: '',
+        listOfKeywordsError: '',
+        matchingStatusError: ''
 
     });
 
@@ -67,7 +69,7 @@ const PSignIn = () => {
                 ...errors
             }));
         } else {
-            // Construct the object expected by your backend
+            
             const professionalRequest = {
                 firstName: state.firstName,
                 lastName: state.lastName,
@@ -82,18 +84,19 @@ const PSignIn = () => {
                 degree: state.degree,
                 graduationDate: state.graduationDate,
                 category: state.category,
-                keys: state.keys
+                listOfKeywords: state.listOfKeywords,
+                matchingStatus: state.matchingStatus
             };
 
             try {
                 const response = await axios.post('http://localhost:8080/api/professionalRequests', professionalRequest);
                 console.log('Server response:', response.data);
                 alert('Professional request submitted successfully!');
-                // Handle the response appropriately
+                
             } catch (error) {
                 console.error('Error submitting form:', error);
                 alert('Professional request submission failed!');
-                // Optionally update the state to show the error message
+                
             }
         }
     };
@@ -210,12 +213,12 @@ const PSignIn = () => {
                         <p style={{ color: "red" }}>{state.categoryError}</p>
                     </div>
                     <div>
-                        <label className="label" htmlFor="keys">Key words/phrases</label>
+                        <label className="label" htmlFor="listOfKeywords">Key words/phrases</label>
                         <div>
-                            <input type="text" id="keys" name="keys" value={state.keys}
+                            <input type="text" id="listOfKeywords" name="listOfKeywords" value={state.listOfKeywords}
                                 onChange={handleInputChange} />
                         </div>
-                        <p style={{ color: "red" }}>{state.keysError}</p>
+                        <p style={{ color: "red" }}>{state.listOfKeywordsError}</p>
                     </div>
                 </div>
                 <div className={Styles.button}>
